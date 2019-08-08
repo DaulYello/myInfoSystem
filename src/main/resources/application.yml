@@ -1,0 +1,42 @@
+
+server:
+  port: 8085
+  max-http-header-size: 10240
+
+guns:
+  swagger-open: true                #是否开启swagger (true/false)
+  kaptcha-open: false               #是否开启登录时验证码 (true/false)
+  spring-session-open: false        #是否开启spring session,如果是多机环境需要开启(true/false)
+  session-invalidate-time: 1800     #session失效时间(只在单机环境下生效，多机环境在SpringSessionConfig类中配置,系统在xxx秒之内没有操作过，session过期，重新登录) 单位：秒
+  session-validation-interval: 60  #多久检测一次失效的session(只在单机环境下生效) 单位：秒
+
+beetl:
+  resource-auto-check: true         #热加载beetl模板，开发时候用
+
+#指定目录或者排除目录来进行热部署
+#添加那个目录的文件需要restart
+#spring.devtools.restart.additional-paths=src/main/java
+#排除那个目录的文件不需要restart
+#spring.devtools.restart.exclude=static/**,public/**
+spring:
+  profiles:
+    active: @spring.active@
+  mvc:
+    view:
+      prefix: /pages
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+      exclude: assets/**,pages/**
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+
+mybatis-plus:
+  typeAliasesPackage: cn.stylefeng.guns.modular.system.model
+  mapper-locations: classpath:cn/stylefeng/guns/modular/**/mapping/*.xml
+
+log:
+  path: myinfo-logs
