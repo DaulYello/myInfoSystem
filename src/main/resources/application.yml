@@ -1,22 +1,21 @@
-
 server:
-  port: 8085
+  port: 8084
   max-http-header-size: 10240
 
-guns:
-  swagger-open: true                #ÊÇ·ñ¿ªÆôswagger (true/false)
-  kaptcha-open: false               #ÊÇ·ñ¿ªÆôµÇÂ¼Ê±ÑéÖ¤Âë (true/false)
-  spring-session-open: false        #ÊÇ·ñ¿ªÆôspring session,Èç¹ûÊÇ¶à»ú»·¾³ĞèÒª¿ªÆô(true/false)
-  session-invalidate-time: 1800     #sessionÊ§Ğ§Ê±¼ä(Ö»ÔÚµ¥»ú»·¾³ÏÂÉúĞ§£¬¶à»ú»·¾³ÔÚSpringSessionConfigÀàÖĞÅäÖÃ,ÏµÍ³ÔÚxxxÃëÖ®ÄÚÃ»ÓĞ²Ù×÷¹ı£¬session¹ıÆÚ£¬ÖØĞÂµÇÂ¼) µ¥Î»£ºÃë
-  session-validation-interval: 60  #¶à¾Ã¼ì²âÒ»´ÎÊ§Ğ§µÄsession(Ö»ÔÚµ¥»ú»·¾³ÏÂÉúĞ§) µ¥Î»£ºÃë
+myinfo:
+  swagger-open: true                #æ˜¯å¦å¼€å¯swagger (true/false)
+  kaptcha-open: false               #æ˜¯å¦å¼€å¯ç™»å½•æ—¶éªŒè¯ç  (true/false)
+  spring-session-open: false        #æ˜¯å¦å¼€å¯spring session,å¦‚æœæ˜¯å¤šæœºç¯å¢ƒéœ€è¦å¼€å¯(true/false)
+  session-invalidate-time: 1800     #sessionå¤±æ•ˆæ—¶é—´(åªåœ¨å•æœºç¯å¢ƒä¸‹ç”Ÿæ•ˆï¼Œå¤šæœºç¯å¢ƒåœ¨SpringSessionConfigç±»ä¸­é…ç½®,ç³»ç»Ÿåœ¨xxxç§’ä¹‹å†…æ²¡æœ‰æ“ä½œè¿‡ï¼Œsessionè¿‡æœŸï¼Œé‡æ–°ç™»å½•) å•ä½ï¼šç§’
+  session-validation-interval: 60  #å¤šä¹…æ£€æµ‹ä¸€æ¬¡å¤±æ•ˆçš„session(åªåœ¨å•æœºç¯å¢ƒä¸‹ç”Ÿæ•ˆ) å•ä½ï¼šç§’
 
 beetl:
-  resource-auto-check: true         #ÈÈ¼ÓÔØbeetlÄ£°å£¬¿ª·¢Ê±ºòÓÃ
+  resource-auto-check: true         #çƒ­åŠ è½½beetlæ¨¡æ¿ï¼Œå¼€å‘æ—¶å€™ç”¨
 
-#Ö¸¶¨Ä¿Â¼»òÕßÅÅ³ıÄ¿Â¼À´½øĞĞÈÈ²¿Êğ
-#Ìí¼ÓÄÇ¸öÄ¿Â¼µÄÎÄ¼şĞèÒªrestart
+#æŒ‡å®šç›®å½•æˆ–è€…æ’é™¤ç›®å½•æ¥è¿›è¡Œçƒ­éƒ¨ç½²
+#æ·»åŠ é‚£ä¸ªç›®å½•çš„æ–‡ä»¶éœ€è¦restart
 #spring.devtools.restart.additional-paths=src/main/java
-#ÅÅ³ıÄÇ¸öÄ¿Â¼µÄÎÄ¼ş²»ĞèÒªrestart
+#æ’é™¤é‚£ä¸ªç›®å½•çš„æ–‡ä»¶ä¸éœ€è¦restart
 #spring.devtools.restart.exclude=static/**,public/**
 spring:
   profiles:
@@ -35,8 +34,8 @@ spring:
       max-file-size: 100MB
 
 mybatis-plus:
-  typeAliasesPackage: cn.stylefeng.guns.modular.system.model
-  mapper-locations: classpath:cn/stylefeng/guns/modular/**/mapping/*.xml
+  typeAliasesPackage: com.personal.info.myInfoSystem.modular.system.model
+  mapper-locations: classpath:com/personal/info/myInfoSystem/modular/**/mapping/*.xml
 
 log:
   path: myinfo-logs
