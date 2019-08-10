@@ -7,6 +7,7 @@ import com.personal.info.myInfoSystem.modular.system.service.UserService;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,20 @@ public class LoginController extends BaseController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 跳转到登录页面
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 5:41 PM
+     */
+    @GetMapping(value = "/login")
+    public String login() {
+        if (ShiroKit.isAuthenticated() || ShiroKit.getUser() != null) {
+            return REDIRECT + "/";
+        } else {
+            return "/login.html";
+        }
+    }
     /**
      * 点击登录执行的动作
      *
@@ -58,5 +73,19 @@ public class LoginController extends BaseController {
         ShiroKit.getSession().setAttribute("sessionFlag", true);
 
         return REDIRECT + "/";
+    }
+
+    /**
+     * 退出登录
+     *
+     * @author fengshuonan
+     * @Date 2018/12/23 5:42 PM
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logOut() {
+        //LogManager.me().executeLog(LogTaskFactory.exitLog(ShiroKit.getUserNotNull().getId(), getIp()));
+        ShiroKit.getSubject().logout();
+        deleteAllCookie();
+        return REDIRECT + "/login";
     }
 }
