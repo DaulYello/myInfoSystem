@@ -42,7 +42,7 @@ import java.util.HashMap;
  * @Date 2018/7/20 23:39
  */
 @RestController
-@RequestMapping("/gunsApi")
+@RequestMapping("/myInfoApi")
 public class ApiController extends BaseController {
 
     @Autowired

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.stylefeng.guns.modular.system.mapper.UserMapper">
+<mapper namespace="com.personal.info.myInfoSystem.modular.system.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.stylefeng.guns.modular.system.entity.User">
+    <resultMap id="BaseResultMap" type="com.personal.info.myInfoSystem.modular.system.entity.User">
         <id column="user_id" property="userId" />
         <result column="avatar" property="avatar" />
         <result column="account" property="account" />
@@ -64,13 +64,13 @@
 		#{userId}
 	</update>
 
-    <select id="getByAccount" resultType="cn.stylefeng.guns.modular.system.entity.User">
+    <select id="getByAccount" resultType="com.personal.info.myInfoSystem.modular.system.entity.User">
         select
         <include refid="Base_Column_List_With_Pwd"/>
         from sys_user where account = #{account} and status != 'DELETED'
     </select>
 
-    <select id="getByUser" resultType="cn.stylefeng.guns.modular.system.entity.User">
+    <select id="getByUser" resultType="com.personal.info.myInfoSystem.modular.system.entity.User">
         select
         <include refid="Base_Column_List_With_Pwd"/>
         from sys_user where STATUS != 'DELETED'

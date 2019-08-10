@@ -1,7 +1,22 @@
+/**
+ * Copyright 2018-2020 stylefeng & fengshuonan (sn93@qq.com)
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.personal.info.myInfoSystem.config.web;
 
 
-import com.personal.info.myInfoSystem.config.properties.SystemProperties;
+import com.personal.info.myInfoSystem.config.properties.MyInfoProperties;
 import com.personal.info.myInfoSystem.core.interceptor.MyUserFilter;
 import com.personal.info.myInfoSystem.core.shiro.ShiroDbRealm;
 import org.apache.shiro.cache.CacheManager;
@@ -31,85 +46,48 @@ import java.util.Map;
 
 import static com.personal.info.myInfoSystem.core.common.constant.Const.NONE_PERMISSION_RES;
 
-
 /**
- * shiro 权限管理配置
- * @author shuanghuang
- * @date 2019年08月06日 16:00
+ * shiro权限管理的配置
+ *
+ * @author fengshuonan
+ * @date 2016年11月14日 下午3:03:44
  */
-
 @Configuration
 public class ShiroConfig {
 
     /**
-     * 记住密码cookie
-     * cookie设置HttpOnly属性以增强安全，避免一定程度的跨站攻击。
-     * 防止脚本攻击,禁止了通过脚本获取cookie信息,浏览器不会将其发送给任何第三方
-     * @return
+     * 安全管理器
      */
     @Bean
-    public SimpleCookie rememberMeCookie(){
-
-        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
-
-        simpleCookie.setHttpOnly(true);
-        /*最大的生存时间7天，参数是秒为单位*/
-        simpleCookie.setMaxAge(7*24*60*60);
-        /*simpleCookie.setSecure(boolean secure)
-        若使用HTTPS安全连接,则需要设置其属性为true
-        simpleCookie.setPath(String path)
-        设置当前Cookie所处于的相对路径
-        simpleCookie.setName(String name)
-        修改Session ID的名称，默认为"JSESSIONID"
-        simpleCookie.setDomain(String domain)
-        设置当前Cookie所处于的域*/
-
-        return simpleCookie;
-    }
-
-    /**
-     * remeberMe管理器，cipherKey生成见{@code Base64Test.java}
-     * @param remeberMeCookie
-     * @return
-     */
-    @Bean
-    public CookieRememberMeManager rememberMeManager(SimpleCookie remeberMeCookie){
-        CookieRememberMeManager manager = new CookieRememberMeManager();
-        manager.setCipherKey(Base64.decode("bXlJbmZvU3lzdGVtAAAAAA=="));
-        manager.setCookie(remeberMeCookie);
-        return manager;
-    }
-
-    /**
-     * 缓存管理器，使用Ehcache实现
-     * @param ehcache
-     * @return
-     */
-    @Bean
-    public CacheManager getCacheShiroManager(EhCacheManagerFactoryBean ehcache) {
-        EhCacheManager ehCacheManager = new EhCacheManager();
-        ehCacheManager.setCacheManager(ehcache.getObject());
-        return ehCacheManager;
+    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager, CacheManager cacheShiroManager, SessionManager sessionManager) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(this.shiroDbRealm());
+        securityManager.setCacheManager(cacheShiroManager);
+        securityManager.setRememberMeManager(rememberMeManager);
+        securityManager.setSessionManager(sessionManager);
+        return securityManager;
     }
 
     /**
      * spring session管理器（多机环境）
      */
     @Bean
-    @ConditionalOnProperty(prefix = "system", name = "spring-session-open", havingValue = "true")
+    @ConditionalOnProperty(prefix = "myinfo", name = "spring-session-open", havingValue = "true")
     public ServletContainerSessionManager servletContainerSessionManager() {
         return new ServletContainerSessionManager();
     }
+
     /**
-     * session 管理器（单机环境）
+     * session管理器(单机环境)
+     * 4
      */
     @Bean
-    @ConditionalOnProperty(prefix = "system", name = "spring-session-open", havingValue = "false")
-    public DefaultWebSessionManager defaultWebSessionManager(CacheManager cacheManager, SystemProperties systemProperties){
+    @ConditionalOnProperty(prefix = "myinfo", name = "spring-session-open", havingValue = "false")
+    public DefaultWebSessionManager defaultWebSessionManager(CacheManager cacheShiroManager, MyInfoProperties myInfoProperties) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setCacheManager(cacheManager);
-        sessionManager.setSessionValidationInterval(systemProperties.getSessionValidationInterval() * 1000);
-        sessionManager.setGlobalSessionTimeout(systemProperties.getSessionInvalidateTime() * 1000);
+        sessionManager.setCacheManager(cacheShiroManager);
+        sessionManager.setSessionValidationInterval(myInfoProperties.getSessionValidationInterval() * 1000);
+        sessionManager.setGlobalSessionTimeout(myInfoProperties.getSessionInvalidateTime() * 1000);
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setSessionValidationSchedulerEnabled(true);
         Cookie cookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
@@ -120,23 +98,46 @@ public class ShiroConfig {
     }
 
     /**
-     * 项目自定义的Realm
+     * 缓存管理器 使用Ehcache实现
+     * 3
+     */
+    @Bean
+    public CacheManager getCacheShiroManager(EhCacheManagerFactoryBean ehcache) {
+        EhCacheManager ehCacheManager = new EhCacheManager();
+        ehCacheManager.setCacheManager(ehcache.getObject());
+        return ehCacheManager;
+    }
+
+    /**
+     * 项目自定义的Realm 4
      */
     @Bean
     public ShiroDbRealm shiroDbRealm() {
         return new ShiroDbRealm();
     }
 
-
     /**
-     * 在方法中 注入 securityManager,进行代理控制
+     * rememberMe管理器, cipherKey生成见{@code Base64Test.java}
+     * 2
      */
     @Bean
-    public MethodInvokingFactoryBean methodInvokingFactoryBean(DefaultWebSecurityManager securityManager) {
-        MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
-        bean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-        bean.setArguments(securityManager);
-        return bean;
+    public CookieRememberMeManager rememberMeManager(SimpleCookie rememberMeCookie) {
+        CookieRememberMeManager manager = new CookieRememberMeManager();
+        manager.setCipherKey(Base64.decode("Z3VucwAAAAAAAAAAAAAAAA=="));
+        manager.setCookie(rememberMeCookie);
+        return manager;
+    }
+
+    /**
+     * 记住密码Cookie
+     * 1
+     */
+    @Bean
+    public SimpleCookie rememberMeCookie() {
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        simpleCookie.setHttpOnly(true);
+        simpleCookie.setMaxAge(7 * 24 * 60 * 60);//7天
+        return simpleCookie;
     }
 
     /**
@@ -191,6 +192,18 @@ public class ShiroConfig {
     }
 
     /**
+     * 在方法中 注入 securityManager,进行代理控制
+     * 6
+     */
+    @Bean
+    public MethodInvokingFactoryBean methodInvokingFactoryBean(DefaultWebSecurityManager securityManager) {
+        MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
+        bean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
+        bean.setArguments(securityManager);
+        return bean;
+    }
+
+    /**
      * Shiro生命周期处理器:
      * 用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调(例如:UserRealm)
      * 在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调(例如:DefaultSecurityManager)
@@ -202,6 +215,7 @@ public class ShiroConfig {
 
     /**
      * 启用shrio授权注解拦截方式，AOP式方法级权限检查
+     * 9
      */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
@@ -211,16 +225,4 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
-    /**
-     * 安全管理器
-     */
-    @Bean
-    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager, CacheManager cacheShiroManager, SessionManager sessionManager) {
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(this.shiroDbRealm());
-        securityManager.setCacheManager(cacheShiroManager);
-        securityManager.setRememberMeManager(rememberMeManager);
-        securityManager.setSessionManager(sessionManager);
-        return securityManager;
-    }
 }

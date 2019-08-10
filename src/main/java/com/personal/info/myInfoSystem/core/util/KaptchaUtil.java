@@ -13,22 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.personal.info.myInfoSystem.core.common.constant;
+package com.personal.info.myInfoSystem.core.util;
+
+import cn.stylefeng.roses.core.util.SpringContextHolder;
+import com.personal.info.myInfoSystem.config.properties.MyInfoProperties;
 
 /**
- * jwt相关配置
- *
- * @author fengshuonan
- * @date 2017-08-23 9:23
+ * 验证码工具类
  */
-public interface JwtConstants {
+public class KaptchaUtil {
 
-    String AUTH_HEADER = "Authorization";
-
-    String SECRET = "defaultSecret";
-
-    Long EXPIRATION = 604800L;
-
-    String AUTH_PATH = "/myInfoApi/auth";
-
+    /**
+     * 获取验证码开关
+     */
+    public static Boolean getKaptchaOnOff() {
+        return SpringContextHolder.getBean(MyInfoProperties.class).getKaptchaOpen();
+    }
 }

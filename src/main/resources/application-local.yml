@@ -8,7 +8,7 @@ spring:
     filters: wall,mergeStat
 
 # 多数据源情况的配置
-guns:
+myinfo:
   muti-datasource:
     open: false
     driver-class-name: com.mysql.cj.jdbc.Driver
