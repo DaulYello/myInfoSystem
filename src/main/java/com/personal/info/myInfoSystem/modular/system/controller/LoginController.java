@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import static cn.stylefeng.roses.core.util.HttpContext.getIp;
 
@@ -30,11 +31,17 @@ public class LoginController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 5:41 PM
      */
-    @GetMapping(value = "/login")
+    //@GetMapping(value = "/login")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
+        //ModelAndView mv = new ModelAndView();
         if (ShiroKit.isAuthenticated() || ShiroKit.getUser() != null) {
             return REDIRECT + "/";
         } else {
+            /*mv.addObject("id", 1);
+            mv.addObject("name", "dongguo1");
+            mv.setViewName("/login.html");
+            return mv;*/
             return "/login.html";
         }
     }

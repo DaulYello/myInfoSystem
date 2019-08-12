@@ -10,7 +10,7 @@ myinfo:
   session-validation-interval: 60
 
 beetl:
-  resource-auto-check: true
+  resource-auto-check: false
 
 
 spring:
