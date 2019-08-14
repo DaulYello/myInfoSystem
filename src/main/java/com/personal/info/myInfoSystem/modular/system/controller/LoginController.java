@@ -7,11 +7,11 @@ import com.personal.info.myInfoSystem.modular.system.service.UserService;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.lang.reflect.Method;
 
 import static cn.stylefeng.roses.core.util.HttpContext.getIp;
 
@@ -19,7 +19,7 @@ import static cn.stylefeng.roses.core.util.HttpContext.getIp;
  * 登录控制器
  * @author xxx
  */
-@RestController
+@Controller
 public class LoginController extends BaseController {
 
     @Autowired
@@ -31,17 +31,11 @@ public class LoginController extends BaseController {
      * @author fengshuonan
      * @Date 2018/12/23 5:41 PM
      */
-    //@GetMapping(value = "/login")
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login() {
-        //ModelAndView mv = new ModelAndView();
         if (ShiroKit.isAuthenticated() || ShiroKit.getUser() != null) {
             return REDIRECT + "/";
         } else {
-            /*mv.addObject("id", 1);
-            mv.addObject("name", "dongguo1");
-            mv.setViewName("/login.html");
-            return mv;*/
             return "/login.html";
         }
     }
