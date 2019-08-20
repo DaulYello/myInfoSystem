@@ -8,6 +8,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,6 +26,18 @@ public class LoginController extends BaseController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 跳转到主页
+     * @param model spring自动为Model创建实例，并作为controller的入参
+     * @return
+     */
+    @RequestMapping(value = "/",method = RequestMethod.GET)
+    public String index(Model model){
+
+        ShiroUser shiroUser = ShiroKit.getUserNotNull();
+        //List<>
+        return "index.html";
+    }
     /**
      * 跳转到登录页面
      *
@@ -73,6 +86,8 @@ public class LoginController extends BaseController {
 
         return REDIRECT + "/";
     }
+
+
 
     /**
      * 退出登录
