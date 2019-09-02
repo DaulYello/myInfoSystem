@@ -30,7 +30,7 @@ public class GenerateUtils {
             // 生成各层目录
             makedirs();
             // 备份mapper接口文件
-            backupMapper();
+            // backupMapper();
             // 生成持久层代码
             generate();
             System.out.println("生成持久层代码");
@@ -61,17 +61,17 @@ public class GenerateUtils {
                     "persist.pack");
             String[] arr = persist_pack.split("\\.");
             if (!arr[0].trim().equals("com")
-                    || !arr[1].trim().equals("bm")
-                    || !arr[arr.length - 1].trim().equals("dao")) {
+                    || !arr[1].trim().equals("personal")
+                    || !arr[arr.length - 1].trim().equals("entity")) {
                 printerr();
                 return false;
             }
-            for (String str : arr) {
+            /*for (String str : arr) {
                 if (!VerifyUtils.isLowerStr(str) || str.contains(" ")) {
                     printerr();
                     return false;
                 }
-            }
+            }*/
         } catch (Exception e) {
             printerr();
             return false;
@@ -113,7 +113,7 @@ public class GenerateUtils {
         service_dir.mkdirs();
 
         // 获取model层路径
-        String model_pack = persist_pack.replace("dao", "model");
+        String model_pack = persist_pack.replace("entity", "model");
         String model_path = MyFileUtils.getCurrentSrcPath()
                 + model_pack.replace(".", "\\") + "\\";
         // 生成model层目录
@@ -124,7 +124,7 @@ public class GenerateUtils {
     // 扫描entity生成controller/service两层代码
     private static void genCtrlAndSrvc() {
         // 获取持久层路径
-        String persist_pack = ConfigUtils.getVal("dataSource.properties",
+        String persist_pack = ConfigUtils.getVal("sysconfig.properties",
                 "persist.pack");
         String persist_path = MyFileUtils.getCurrentSrcPath()
                 + persist_pack.replace(".", "\\") + "\\";
@@ -245,7 +245,7 @@ public class GenerateUtils {
 
     // 备份mapper接口文件
     private static void backupMapper() {
-        String persist_pack = ConfigUtils.getVal("dataSource.properties",
+        String persist_pack = ConfigUtils.getVal("sysconfig.properties",
                 "persist.pack");
         String mapper_pack = persist_pack.replace("entity", "mapper");
         String mapper_path = mapper_pack.replace(".", "\\") + "\\";
@@ -255,7 +255,7 @@ public class GenerateUtils {
         for (File file : files) {
             if (file.getName().contains("Mapper.java")) {
                 MyFileUtils.copyFileKeepName(file.getAbsolutePath(),
-                        MyFileUtils.getCurrentSrcPath() + "tmpcode\\",
+                            MyFileUtils.getCurrentSrcPath() + "tmpcode\\",
                         MyFileUtils.FILE_OVERWRITE);
             }
         }
@@ -292,7 +292,7 @@ public class GenerateUtils {
         List<String> warnings = new ArrayList<String>();
         Configuration config = new ConfigurationParser(warnings)
                 .parseConfiguration(GenerateUtils.class
-                        .getResourceAsStream("GenerateUtils.xml"));
+                        .getResourceAsStream("generatorConfig.xml"));
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config,
                 new DefaultShellCallback(true), warnings);
         myBatisGenerator.generate(null);

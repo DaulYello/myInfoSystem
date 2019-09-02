@@ -13,7 +13,7 @@ public class MyFileUtils {
 
 	// 获取工程src路径
 	public static String getCurrentSrcPath() {
-		String path = new File("").getAbsolutePath() + "\\myInfoSystem\\src\\main\\java\\";
+		String path = new File("").getAbsolutePath() + "\\src\\main\\java\\";
 		return path;
 	}
 

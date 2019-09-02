@@ -1,3 +1,4 @@
+
 # Mysql数据库
 spring:
   datasource:
@@ -16,3 +17,7 @@ myinfo:
     username: root
     password: root
     data-source-name: otherdb
+
+#持久层目录
+persist:
+    pack: com.personal.info.myInfoSystem.modular.system.entity

@@ -43,7 +43,7 @@ public class DefaultImages {
      */
     public static String defaultAvatarUrl() {
         return ConfigListener.getConf().get("contextPath") + "/system/previewAvatar";
-    }
+}
 
     /**
      * 默认的404错误页面背景
