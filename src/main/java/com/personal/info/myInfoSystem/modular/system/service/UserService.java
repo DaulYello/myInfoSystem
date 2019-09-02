@@ -11,9 +11,11 @@ import com.personal.info.myInfoSystem.core.common.constant.cache.Cache;
 import com.personal.info.myInfoSystem.core.common.constant.cache.CacheKey;
 import com.personal.info.myInfoSystem.core.common.constant.state.ManagerStatus;
 import com.personal.info.myInfoSystem.core.common.exception.BizExceptionEnum;
+import com.personal.info.myInfoSystem.core.node.MenuNode;
 import com.personal.info.myInfoSystem.core.shiro.ShiroKit;
 import com.personal.info.myInfoSystem.core.shiro.ShiroUser;
 import com.personal.info.myInfoSystem.core.shiro.service.UserAuthService;
+import com.personal.info.myInfoSystem.core.util.ApiMenuFilter;
 import com.personal.info.myInfoSystem.modular.system.entity.User;
 import com.personal.info.myInfoSystem.modular.system.factory.UserFactory;
 import com.personal.info.myInfoSystem.modular.system.mapper.UserMapper;
@@ -37,8 +39,8 @@ import java.util.Map;
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> {
 
-    /*@Autowired
-    private MenuService menuService;*/
+    @Autowired
+    private MenuService menuService;
 
     @Autowired
     private UserAuthService userAuthService;
@@ -172,7 +174,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @author fengshuonan
      * @Date 2018/12/24 22:46
      */
-    /*public List<MenuNode> getUserMenuNodes(List<Long> roleList) {
+    public List<MenuNode> getUserMenuNodes(List<Long> roleList) {
         if (roleList == null || roleList.size() == 0) {
             return new ArrayList<>();
         } else {
@@ -182,7 +184,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             return ApiMenuFilter.build(titles);
         }
 
-    }*/
+    }
 
     /**
      * 判断当前登录的用户是否有操作这个用户的权限

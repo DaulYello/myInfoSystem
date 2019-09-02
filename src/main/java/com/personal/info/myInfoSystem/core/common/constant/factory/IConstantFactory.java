@@ -30,7 +30,7 @@ public interface IConstantFactory {
      * 根据用户id获取用户名称
      *
      * @author stylefeng
-     * @Date 2017/5/9 23:41
+     * @Date 2017/5/9 23:41getMenuNameByCode
      */
     String getUserNameById(Long userId);
 
@@ -42,6 +42,8 @@ public interface IConstantFactory {
      */
     String getUserAccountById(Long userId);
 
+
+
     /**
      * 通过角色ids获取角色名称
      */
@@ -49,10 +51,10 @@ public interface IConstantFactory {
 
     *//**
      * 通过角色id获取角色名称
-     *//*
+     */
     String getSingleRoleName(Long roleId);
 
-    *//**
+    /**
      * 通过角色id获取角色英文名称
      *//*
     String getSingleRoleTip(Long roleId);
@@ -79,10 +81,10 @@ public interface IConstantFactory {
 
     *//**
      * 获取菜单名称通过编号
-     *//*
+     */
     String getMenuNameByCode(String code);
 
-    *//**
+    /**
      * 获取菜单名称通过编号
      *//*
     Long getMenuIdByCode(String code);

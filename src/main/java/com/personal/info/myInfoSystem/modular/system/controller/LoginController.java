@@ -1,8 +1,10 @@
 package com.personal.info.myInfoSystem.modular.system.controller;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
+import com.personal.info.myInfoSystem.core.node.MenuNode;
 import com.personal.info.myInfoSystem.core.shiro.ShiroKit;
 import com.personal.info.myInfoSystem.core.shiro.ShiroUser;
+
 import com.personal.info.myInfoSystem.modular.system.service.UserService;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -10,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.lang.reflect.Method;
 
-import static cn.stylefeng.roses.core.util.HttpContext.getIp;
+import java.util.List;
+
+
 
 /**
  * 登录控制器
@@ -35,7 +37,14 @@ public class LoginController extends BaseController {
     public String index(Model model){
 
         ShiroUser shiroUser = ShiroKit.getUserNotNull();
-        //List<>
+        List<Long> roleList =  shiroUser.getRoleList();
+        if (roleList == null || roleList.size() == 0) {
+            ShiroKit.getSubject().logout();
+            model.addAttribute("tips", "该用户没有角色，无法登陆");
+            return "/login.html";
+        }
+        List<MenuNode> menus = userService.getUserMenuNodes(roleList);
+        model.addAttribute("menus", menus);
         return "index.html";
     }
     /**

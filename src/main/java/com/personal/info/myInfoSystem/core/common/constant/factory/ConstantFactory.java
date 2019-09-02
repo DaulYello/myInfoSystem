@@ -22,7 +22,11 @@ import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.personal.info.myInfoSystem.core.common.constant.cache.Cache;
 import com.personal.info.myInfoSystem.core.common.constant.cache.CacheKey;
+import com.personal.info.myInfoSystem.modular.system.entity.Menu;
+import com.personal.info.myInfoSystem.modular.system.entity.Role;
 import com.personal.info.myInfoSystem.modular.system.entity.User;
+import com.personal.info.myInfoSystem.modular.system.mapper.MenuMapper;
+import com.personal.info.myInfoSystem.modular.system.mapper.RoleMapper;
 import com.personal.info.myInfoSystem.modular.system.mapper.UserMapper;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.DependsOn;
@@ -41,13 +45,14 @@ import java.util.List;
 @DependsOn("springContextHolder")
 public class ConstantFactory implements IConstantFactory {
 
-   /* private RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
+    private RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
+    /*
     private DeptMapper deptMapper = SpringContextHolder.getBean(DeptMapper.class);
     private DictMapper dictMapper = SpringContextHolder.getBean(DictMapper.class);
     private DictTypeMapper dictTypeMapper = SpringContextHolder.getBean(DictTypeMapper.class);*/
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
-    /*private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
-    private NoticeMapper noticeMapper = SpringContextHolder.getBean(NoticeMapper.class);*/
+    private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
+    /*private NoticeMapper noticeMapper = SpringContextHolder.getBean(NoticeMapper.class);*/
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -91,7 +96,7 @@ public class ConstantFactory implements IConstantFactory {
     }*/
 
     //@Override
-    /*@Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_ROLE_NAME + "'+#roleId")
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_ROLE_NAME + "'+#roleId")
     public String getSingleRoleName(Long roleId) {
         if (0 == roleId) {
             return "--";
@@ -101,7 +106,7 @@ public class ConstantFactory implements IConstantFactory {
             return roleObj.getName();
         }
         return "";
-    }*/
+    }
 
     /*@Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_ROLE_TIP + "'+#roleId")
@@ -177,7 +182,7 @@ public class ConstantFactory implements IConstantFactory {
             }
         }
     }
-
+*/
     @Override
     public String getMenuNameByCode(String code) {
         if (ToolUtil.isEmpty(code)) {
@@ -197,6 +202,7 @@ public class ConstantFactory implements IConstantFactory {
         }
     }
 
+    /*
     @Override
     public Long getMenuIdByCode(String code) {
         if (ToolUtil.isEmpty(code)) {

@@ -84,10 +84,10 @@ public class UserAuthServiceServiceImpl implements UserAuthService {
         //获取用户角色列表
         List<Long> roleList = new ArrayList<>();
         List<String> roleNameList = new ArrayList<>();
-        /*for (Long roleId : roleArray) {
+        for (Long roleId : roleArray) {
             roleList.add(roleId);
             roleNameList.add(ConstantFactory.me().getSingleRoleName(roleId));
-        }*/
+        }
         shiroUser.setRoleList(roleList);
         shiroUser.setRoleNames(roleNameList);
 
