@@ -116,10 +116,10 @@ public interface IConstantFactory {
 
     *//**
      * 获取菜单状态
-     *//*
+     */
     String getMenuStatusName(String status);
 
-    *//**
+    /**
      * 查询字典
      *//*
     //List<Dict> findInDict(Long id);

@@ -90,6 +90,7 @@ public class MyArray {
         }
     }
 
+    /*这个思路和选择排序差不多的*/
     public void sortMe(){
         int temp = 0;
         long min = 0;
@@ -107,11 +108,29 @@ public class MyArray {
         }
     }
 
+    /*选择排序的效率比冒泡排序更好*/
+    public void selectSort(){
+        long temp = 0;
+        int k = 0;//记录最小值的下标，默认第一个
+        for (int i = 0;i<elements-1;i++){
+            k = i;
+            for (int j = i;j<elements;j++){
+                if (arr[j] < arr[k]) {
+                    k = j;
+                }
+            }
+            temp = arr[i];
+            arr[i] = arr[k];
+            arr[k] = temp;
+        }
+    }
+
     /*冒泡排序*/
     public void bubbleSort(){
 
+        /*每一次冒出最大的数*/
         long temp = 0;
-        for (int i=0;i<elements;i++){
+        /*for (int i=0;i<elements;i++){
             for (int j = 0;j<elements-1-i;j++){
                 if (arr[j] > arr[j+1]){
                     temp = arr[j];
@@ -119,8 +138,40 @@ public class MyArray {
                     arr[j+1] = temp;
                 }
             }
-
+        }*/
+        /*每一次冒出最小的数*/
+        for (int i=0;i<elements-1;i++){
+            for (int j = elements-1;j>i;j--){
+                if (arr[j] < arr[j-1]){
+                    temp = arr[j];
+                    arr[j] = arr[j-1];
+                    arr[j-1] = temp;
+                }
+            }
         }
+    }
+
+    /**
+     * 插入排序
+     * 思想：它从数组的第二个元素开始i，第二个元素去和第一个元素比较
+     * 如果第二个元素小于第一个元素，它们交换位置，i++,往后找下一个
+     * 元素，这个元素又和左边的元素进行比较确定插入的位置。从此，i后
+     * 面的元素就是有序的,将插入位置开始的数据依次往后移动一位。
+     *
+     */
+    public void InsertSort(){
+
+        long temp = 0;
+        for (int i = 1;i<elements;i++){
+            temp = arr[i];
+            int j = i;
+            while(j > 0 && arr[j] >= temp){//比较和移动同时进行
+                arr[j] = arr[j-1];
+                j--;
+            }
+            arr[j] = temp;
+        }
+
     }
 
     /*构建一个有序数组*/

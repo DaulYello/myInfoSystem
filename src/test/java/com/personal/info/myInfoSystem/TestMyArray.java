@@ -42,7 +42,9 @@ public class TestMyArray {
 
         //System.out.println(myArray.binarySelect(2));
 
-        myArray.bubbleSort();
+        //myArray.bubbleSort();
+//        myArray.selectSort();
+        myArray.InsertSort();
         myArray.dispaly();
     }
 }

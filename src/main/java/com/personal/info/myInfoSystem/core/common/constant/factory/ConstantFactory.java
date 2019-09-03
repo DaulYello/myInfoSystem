@@ -22,6 +22,7 @@ import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.personal.info.myInfoSystem.core.common.constant.cache.Cache;
 import com.personal.info.myInfoSystem.core.common.constant.cache.CacheKey;
+import com.personal.info.myInfoSystem.core.common.constant.state.MenuStatus;
 import com.personal.info.myInfoSystem.modular.system.entity.Menu;
 import com.personal.info.myInfoSystem.modular.system.entity.Role;
 import com.personal.info.myInfoSystem.modular.system.entity.User;
@@ -275,13 +276,14 @@ public class ConstantFactory implements IConstantFactory {
     @Override
     public String getStatusName(String status) {
         return ManagerStatus.getDescription(status);
-    }
+    }*/
 
     @Override
     public String getMenuStatusName(String status) {
         return MenuStatus.getDescription(status);
     }
 
+    /*
     @Override
     public List<Dict> findInDict(Long id) {
         if (ToolUtil.isEmpty(id)) {

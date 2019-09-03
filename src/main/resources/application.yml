@@ -21,7 +21,7 @@ spring:
       prefix: /pages
   devtools:
     restart:
-      enabled: true
+      enabled: false
       additional-paths: src/main/java
       exclude: assets/**,pages/**
   servlet:

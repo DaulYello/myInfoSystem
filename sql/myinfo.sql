@@ -63,6 +63,8 @@ CREATE TABLE `sys_menu`  (
 
 INSERT INTO `sys_menu` VALUES (105, 'system', '0', '[0],', '系统管理', 'layui-icon layui-icon-set', '#', 20, 1, 'Y', NULL, 'ENABLE', NULL, '1', NULL, '2019-03-29 16:32:27', NULL, 1);
 INSERT INTO `sys_menu` VALUES (120, 'menu_add', 'menu', '[0],[system],[menu],', '添加菜单', NULL, '/menu/add', 1, 3, 'N', NULL, 'ENABLE', NULL, '0', NULL, '2019-03-29 16:32:27', NULL, 1);
+INSERT INTO `sys_menu` VALUES (119, 'menu', 'system', '[0],[system],', '菜单管理', NULL, '/menu', 4, 2, 'Y', NULL, 'ENABLE', NULL, '0', NULL, '2019-03-29 16:32:27', NULL, 1);
+
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -87,3 +89,18 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, 0, '超级管理员', 'administrator', 1, 1, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_role` VALUES (5, 1, '临时', 'temp', 2, NULL, NULL, NULL, NULL, NULL);
+
+
+-- ----------------------------
+-- Table structure for sys_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_relation`;
+CREATE TABLE `sys_relation`  (
+  `relation_id` bigint(20) NOT NULL COMMENT '主键',
+  `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单id',
+  `role_id` bigint(20) DEFAULT NULL COMMENT '角色id',
+  PRIMARY KEY (`relation_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '角色和菜单关联表' ROW_FORMAT = Dynamic;
+
+INSERT INTO `sys_relation` VALUES (1135205146879512577, 105, 1);
+INSERT INTO `sys_relation` VALUES (1135205147068256258, 120, 1);
