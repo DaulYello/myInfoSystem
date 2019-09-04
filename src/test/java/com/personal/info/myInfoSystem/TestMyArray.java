@@ -7,14 +7,14 @@ public class TestMyArray {
     public static void main(String[] arg){
         MyArray myArray = new MyArray();
         /*创建一个无序数组*/
-        myArray.addArray(32);
-        myArray.addArray(12);
+        myArray.addArray(34);
+        myArray.addArray(23);
         myArray.addArray(1);
         myArray.addArray(2);
-        myArray.addArray(45);
-        myArray.addArray(5);
-        myArray.addArray(11);
-        myArray.addArray(23);
+        myArray.addArray(-4);
+        myArray.addArray(-5);
+        myArray.addArray(-11);
+        myArray.addArray(-23);
         myArray.dispaly();
         /*创建一个无序数组*/
 

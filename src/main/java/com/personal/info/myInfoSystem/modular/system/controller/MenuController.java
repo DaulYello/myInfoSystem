@@ -1,13 +1,17 @@
 package com.personal.info.myInfoSystem.modular.system.controller;
 
+import com.personal.info.myInfoSystem.core.common.annotation.Permission;
+import com.personal.info.myInfoSystem.core.common.constant.Const;
 import com.personal.info.myInfoSystem.core.common.constant.page.LayuiPageInfo;
 import com.personal.info.myInfoSystem.core.node.ZTreeNode;
 import com.personal.info.myInfoSystem.modular.system.service.MenuService;
 import com.personal.info.myInfoSystem.modular.system.warpper.MenuWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
@@ -34,13 +38,16 @@ public class MenuController {
     }
 
     @RequestMapping("/selectMenuTreeList")
+    @ResponseBody
     public List<ZTreeNode> selectMenuTreeList(){
         List<ZTreeNode> treeList = menuService.menuTreeList();
         treeList.add(ZTreeNode.createParent());
         return treeList;
     }
 
+    @Permission(Const.ADMIN_NAME)
     @RequestMapping("/listTree")
+    @ResponseBody
     public Object listTree(@RequestParam(required = false) String menuName,
                            @RequestParam(required = false) String level){
         List<Map<String, Object>> menus = this.menuService.selectMenuTree(menuName, level);
