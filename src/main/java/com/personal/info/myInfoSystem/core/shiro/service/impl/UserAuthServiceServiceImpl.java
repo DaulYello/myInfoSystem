@@ -24,6 +24,7 @@ import com.personal.info.myInfoSystem.core.shiro.ShiroKit;
 import com.personal.info.myInfoSystem.core.shiro.ShiroUser;
 import com.personal.info.myInfoSystem.core.shiro.service.UserAuthService;
 import com.personal.info.myInfoSystem.modular.system.entity.User;
+import com.personal.info.myInfoSystem.modular.system.mapper.MenuMapper;
 import com.personal.info.myInfoSystem.modular.system.mapper.UserMapper;
 import com.personal.info.myInfoSystem.modular.system.service.UserService;
 import org.apache.shiro.authc.CredentialsException;
@@ -47,8 +48,8 @@ public class UserAuthServiceServiceImpl implements UserAuthService {
     @Autowired
     private UserMapper userMapper;
 
-    /*@Autowired
-    private MenuMapper menuMapper;*/
+    @Autowired
+    private MenuMapper menuMapper;
 
     @Autowired
     private UserService userService;
@@ -94,7 +95,7 @@ public class UserAuthServiceServiceImpl implements UserAuthService {
         return shiroUser;
     }
 
-    /*@Override
+    @Override
     public List<String> findPermissionsByRoleId(Long roleId) {
         return menuMapper.getResUrlsByRoleId(roleId);
     }
@@ -102,7 +103,7 @@ public class UserAuthServiceServiceImpl implements UserAuthService {
     @Override
     public String findRoleNameByRoleId(Long roleId) {
         return ConstantFactory.me().getSingleRoleTip(roleId);
-    }*/
+    }
 
     @Override
     public SimpleAuthenticationInfo info(ShiroUser shiroUser, User user, String realmName) {

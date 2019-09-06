@@ -56,10 +56,10 @@ public interface IConstantFactory {
 
     /**
      * 通过角色id获取角色英文名称
-     *//*
+     */
     String getSingleRoleTip(Long roleId);
 
-    *//**
+    /**
      * 获取部门名称
      *//*
     String getDeptName(Long deptId);

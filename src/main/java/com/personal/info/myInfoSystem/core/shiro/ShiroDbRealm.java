@@ -65,7 +65,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         Set<String> permissionSet = new HashSet<>();
         Set<String> roleNameSet = new HashSet<>();
 
-        /*for (Long roleId : roleList) {
+        for (Long roleId : roleList) {
             List<String> permissions = shiroFactory.findPermissionsByRoleId(roleId);
             if (permissions != null) {
                 for (String permission : permissions) {
@@ -77,7 +77,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
             String roleName = shiroFactory.findRoleNameByRoleId(roleId);
             roleNameSet.add(roleName);
         }
-*/
+
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(permissionSet);
         info.addRoles(roleNameSet);

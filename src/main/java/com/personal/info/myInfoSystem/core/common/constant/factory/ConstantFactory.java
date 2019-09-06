@@ -109,7 +109,7 @@ public class ConstantFactory implements IConstantFactory {
         return "";
     }
 
-    /*@Override
+    @Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_ROLE_TIP + "'+#roleId")
     public String getSingleRoleTip(Long roleId) {
         if (0 == roleId) {
@@ -120,7 +120,7 @@ public class ConstantFactory implements IConstantFactory {
             return roleObj.getDescription();
         }
         return "";
-    }*/
+    }
 
     /*@Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.DEPT_NAME + "'+#deptId")
