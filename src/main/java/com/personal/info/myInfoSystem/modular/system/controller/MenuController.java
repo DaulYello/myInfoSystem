@@ -1,11 +1,15 @@
 package com.personal.info.myInfoSystem.modular.system.controller;
 
+import cn.stylefeng.roses.core.base.controller.BaseController;
+import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import com.personal.info.myInfoSystem.core.common.annotation.Permission;
 import com.personal.info.myInfoSystem.core.common.constant.Const;
 import com.personal.info.myInfoSystem.core.common.constant.page.LayuiPageInfo;
 import com.personal.info.myInfoSystem.core.node.ZTreeNode;
+import com.personal.info.myInfoSystem.modular.system.model.MenuDto;
 import com.personal.info.myInfoSystem.modular.system.service.MenuService;
 import com.personal.info.myInfoSystem.modular.system.warpper.MenuWrapper;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +25,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/menu")
-public class MenuController {
+public class MenuController extends BaseController {
 
     private static final String PREFIX = "/modular/system/menu";
 
@@ -56,6 +60,19 @@ public class MenuController {
         LayuiPageInfo result = new LayuiPageInfo();
         result.setData(menusWrap);
         return result;
+    }
+
+    @RequestMapping("/menu_add")
+    public String menuAdd(){
+        return PREFIX+"/menu_add.html";
+    }
+
+    @Permission(Const.ADMIN_NAME)
+    @RequestMapping("/add")
+    @ResponseBody
+    public ResponseData add(MenuDto menu){
+        this.menuService.addMenu(menu);
+        return SUCCESS_TIP;
     }
 
 

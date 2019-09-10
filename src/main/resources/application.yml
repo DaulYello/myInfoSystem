@@ -7,7 +7,7 @@ myinfo:
   kaptcha-open: false
   spring-session-open: false
   session-invalidate-time: 1800
-  session-validation-interval: 60
+  session-validation-interval: 3600
 
 beetl:
   resource-auto-check: true

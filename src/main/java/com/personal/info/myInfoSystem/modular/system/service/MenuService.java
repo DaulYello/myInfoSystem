@@ -9,10 +9,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.personal.info.myInfoSystem.core.common.constant.factory.ConstantFactory;
+import com.personal.info.myInfoSystem.core.common.constant.state.MenuStatus;
 import com.personal.info.myInfoSystem.core.common.exception.BizExceptionEnum;
 import com.personal.info.myInfoSystem.core.listener.ConfigListener;
 import com.personal.info.myInfoSystem.core.node.MenuNode;
 import com.personal.info.myInfoSystem.core.node.ZTreeNode;
+import com.personal.info.myInfoSystem.core.shiro.ShiroKit;
+import com.personal.info.myInfoSystem.core.shiro.ShiroUser;
 import com.personal.info.myInfoSystem.modular.system.entity.Menu;
 
 import com.personal.info.myInfoSystem.modular.system.mapper.MenuMapper;
@@ -38,33 +41,6 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
 
     @Resource
     private MenuMapper menuMapper;
-
-    /**
-     * 添加菜单
-     *
-     * @author fengshuonan
-     * @Date 2018/12/23 5:59 PM
-     */
-    /*@Transactional
-    public void addMenu(MenuDto menuDto) {
-
-        if (ToolUtil.isOneEmpty(menuDto, menuDto.getCode(), menuDto.getName(), menuDto.getPid(), menuDto.getMenuFlag(), menuDto.getUrl())) {
-            throw new RequestEmptyException();
-        }
-
-        //判断是否已经存在该编号
-        String existedMenuName = ConstantFactory.me().getMenuNameByCode(menuDto.getCode());
-        if (ToolUtil.isNotEmpty(existedMenuName)) {
-            throw new ServiceException(BizExceptionEnum.EXISTED_THE_MENU);
-        }
-
-        //组装属性，设置父级菜单编号
-        Menu resultMenu = this.menuSetPcode(menuDto);
-
-        resultMenu.setStatus(MenuStatus.ENABLE.getCode());
-
-        this.save(resultMenu);
-    }*/
 
     /**
      * 更新菜单
@@ -330,5 +306,28 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
 
         return maps;
     }
+
+    @Transactional
+    public void addMenu(MenuDto menuDto) {
+        if (ToolUtil.isOneEmpty(menuDto,menuDto.getCode(),menuDto.getName(),
+                menuDto.getPid(),menuDto.getMenuFlag(),menuDto.getUrl())){
+            throw new RequestEmptyException();
+        }
+        //判断是否已经存在该编号
+        String existedMenueName = ConstantFactory.me().getMenuNameByCode(menuDto.getCode());
+        if (ToolUtil.isNotEmpty(existedMenueName)){
+            throw new ServiceException(BizExceptionEnum.EXISTED_THE_MENU);
+        }
+
+        Menu menu = this.menuSetPcode(menuDto);
+
+        menu.setStatus(MenuStatus.ENABLE.getCode());
+
+        ShiroUser shiroUser = ShiroKit.getUserNotNull();
+        menu.setCreateUser(shiroUser.getId());
+
+        this.save(menu);
+    }
+
 
 }
