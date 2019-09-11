@@ -4,15 +4,13 @@ import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import com.personal.info.myInfoSystem.core.common.annotation.Permission;
 import com.personal.info.myInfoSystem.core.common.constant.Const;
-import com.personal.info.myInfoSystem.core.common.constant.page.LayuiPageInfo;
+import com.personal.info.myInfoSystem.core.common.constant.page.PageInfo;
 import com.personal.info.myInfoSystem.core.node.ZTreeNode;
 import com.personal.info.myInfoSystem.modular.system.model.MenuDto;
 import com.personal.info.myInfoSystem.modular.system.service.MenuService;
 import com.personal.info.myInfoSystem.modular.system.warpper.MenuWrapper;
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,7 +55,7 @@ public class MenuController extends BaseController {
         List<Map<String, Object>> menus = this.menuService.selectMenuTree(menuName, level);
         List<Map<String, Object>> menusWrap = new MenuWrapper(menus).wrap();
 
-        LayuiPageInfo result = new LayuiPageInfo();
+        PageInfo result = new PageInfo();
         result.setData(menusWrap);
         return result;
     }

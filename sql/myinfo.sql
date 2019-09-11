@@ -104,3 +104,93 @@ CREATE TABLE `sys_relation`  (
 
 INSERT INTO `sys_relation` VALUES (1135205146879512577, 105, 1);
 INSERT INTO `sys_relation` VALUES (1135205147068256258, 120, 1);
+
+
+DROP TABLE IF EXISTS `sys_dept`;
+CREATE TABLE `sys_dept`  (
+  `dept_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `pid` bigint(20) DEFAULT 0 COMMENT '父部门id',
+  `pids` varchar(512) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '' COMMENT '父级ids',
+  `simple_name` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '简称',
+  `full_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '全称',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
+  `version` int(11) DEFAULT NULL COMMENT '版本（乐观锁保留字段）',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  `create_user` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `update_user` bigint(20) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`dept_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '部门表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_dept
+-- ----------------------------
+INSERT INTO `sys_dept` (pid,pids,simple_name,full_name,description,VERSION,sort) VALUES (0, '[0],', '总公司', '总公司', '', NULL, 1);
+INSERT INTO `sys_dept` (pid,pids,simple_name,full_name,description,VERSION,sort) VALUES (24, '[0],[24],', '开发部', '开发部', '', NULL, 2);
+INSERT INTO `sys_dept` (pid,pids,simple_name,full_name,description,VERSION,sort) VALUES (24, '[0],[24],', '运营部', '运营部', '', NULL, 3);
+INSERT INTO `sys_dept` (pid,pids,simple_name,full_name,description,VERSION,sort) VALUES (24, '[0],[24],', '战略部', '战略部', '', NULL, 4);
+
+
+-- ----------------------------
+-- Table structure for sys_dict
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dict`;
+CREATE TABLE `sys_dict`  (
+  `dict_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典id',
+  `dict_type_id` bigint(20) NOT NULL COMMENT '所属字典类型的id',
+  `code` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '字典编码',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '字典名称',
+  `parent_id` bigint(20) NOT NULL COMMENT '上级代码id',
+  `parent_ids` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '所有上级id',
+  `status` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'ENABLE' COMMENT '状态（字典）',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '字典的描述',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '更新时间',
+  `create_user` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `update_user` bigint(20) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`dict_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '基础字典' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_dict
+-- ----------------------------
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (1, 'M', '男', 0, '[0]', 'ENABLE', NULL, '', '2019-03-14 17:11:00', NULL, 1, NULL);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (1, 'F', '女', 0, '[0]', 'ENABLE', NULL, '', '2019-03-14 17:11:10', NULL, 1, NULL);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (2, 'ENABLE', '启用', 0, '[0]', 'ENABLE', NULL, '', '2019-03-14 17:11:27', NULL, 1, NULL);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (2, 'DISABLE', '禁用', 0, '[0]', 'ENABLE', NULL, '', '2019-03-14 17:11:40', NULL, 1, NULL);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (3, 'ENABLE', '启用', 0, '[0]', 'ENABLE', NULL, '', '2019-03-14 17:12:00', NULL, 1, NULL);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (3, 'FREEZE', '冻结', 0, '[0]', 'ENABLE', 1, '', '2019-03-14 17:12:10', '2019-03-16 10:56:36', 1, 1);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (3, 'DELETED', '已删除', 0, '[0]', 'ENABLE', -1221, '', '2019-03-14 17:12:22', '2019-03-16 10:56:53', 1, 1);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (4, 'Y', '删除', 0, '[0]', 'ENABLE', 23333, '', '2019-03-14 17:12:36', '2019-03-16 10:58:53', 1, 1);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (4, 'N', '未删除', 0, '[0]', 'ENABLE', 1212211221, '', '2019-03-14 17:12:44', '2019-03-16 10:59:03', 1, 1);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (3, '11212', '122', 0, '[0]', 'ENABLE', 1212, '122112', '2019-03-16 10:56:30', NULL, 1, NULL);
+INSERT INTO `sys_dict` (dict_type_id,CODE,NAME,parent_id,parent_ids,STATUS,sort,description,create_time,update_time,create_user,update_user)VALUES (4, '12312', '3123123', 1106120968910258177, '[0],[1106120968910258177]', 'ENABLE', 123, '', '2019-03-16 10:59:14', NULL, 1, NULL);
+
+-- ----------------------------
+-- Table structure for sys_dict_type
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_dict_type`;
+CREATE TABLE `sys_dict_type`  (
+  `dict_type_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '字典类型id',
+  `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '字典类型编码',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '字典类型名称',
+  `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '字典描述',
+  `system_flag` char(1) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '是否是系统字典，Y-是，N-否',
+  `status` varchar(10) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'ENABLE' COMMENT '状态(字典)',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '添加时间',
+  `create_user` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime(0) DEFAULT NULL COMMENT '修改时间',
+  `update_user` bigint(20) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`dict_type_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_dict_type
+-- ----------------------------
+INSERT INTO `sys_dict_type` (CODE,NAME,description,system_flag,STATUS,sort,create_time,create_user,update_time,update_user)VALUES ('SEX', '性别', '', 'Y', 'ENABLE', 4, '2019-03-14 17:09:43', 1, NULL, NULL);
+INSERT INTO `sys_dict_type` (CODE,NAME,description,system_flag,STATUS,sort,create_time,create_user,update_time,update_user)VALUES ('STATUS', '状态', '', 'Y', 'ENABLE', 3, '2019-03-14 17:09:57', 1, NULL, NULL);
+INSERT INTO `sys_dict_type` (CODE,NAME,description,system_flag,STATUS,sort,create_time,create_user,update_time,update_user)VALUES ('ACCOUNT_STATUS', '账号状态', '', 'Y', 'ENABLE', 21112, '2019-03-14 17:10:10', 1, '2019-03-16 10:56:15', 1);
+INSERT INTO `sys_dict_type` (CODE,NAME,description,system_flag,STATUS,sort,create_time,create_user,update_time,update_user)VALUES ('DEL_FLAG', '是否删除', '', 'Y', 'ENABLE', 2, '2019-03-14 17:10:26', 1, '2019-03-27 16:26:31', 1);

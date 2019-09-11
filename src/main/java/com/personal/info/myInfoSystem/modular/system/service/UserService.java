@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.personal.info.myInfoSystem.core.common.constant.Const;
 import com.personal.info.myInfoSystem.core.common.constant.cache.Cache;
 import com.personal.info.myInfoSystem.core.common.constant.cache.CacheKey;
+import com.personal.info.myInfoSystem.core.common.constant.page.PageFactory;
 import com.personal.info.myInfoSystem.core.common.constant.state.ManagerStatus;
 import com.personal.info.myInfoSystem.core.common.exception.BizExceptionEnum;
 import com.personal.info.myInfoSystem.core.node.MenuNode;
@@ -143,10 +144,10 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @author fengshuonan
      * @Date 2018/12/24 22:45
      */
-    /*public Page<Map<String, Object>> selectUsers(DataScope dataScope, String name, String beginTime, String endTime, Long deptId) {
-        Page page = LayuiPageFactory.defaultPage();
+    public Page<Map<String, Object>> selectUsers(DataScope dataScope, String name, String beginTime, String endTime, Long deptId) {
+        Page page = PageFactory.defaultPage();
         return this.baseMapper.selectUsers(page, dataScope, name, beginTime, endTime, deptId);
-    }*/
+    }
 
     /**
      * 设置用户的角色

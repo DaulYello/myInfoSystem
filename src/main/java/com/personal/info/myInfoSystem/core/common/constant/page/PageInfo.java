@@ -26,7 +26,7 @@ import java.util.List;
  * @Date 2019年1月25日22:07:36
  */
 @Data
-public class LayuiPageInfo {
+public class PageInfo {
 
     private Integer code = 0;
 

@@ -47,9 +47,9 @@ public interface IConstantFactory {
     /**
      * 通过角色ids获取角色名称
      */
-    /*String getRoleName(String roleIds);
+    String getRoleName(String roleIds);
 
-    *//**
+    /**
      * 通过角色id获取角色名称
      */
     String getSingleRoleName(Long roleId);
@@ -61,10 +61,10 @@ public interface IConstantFactory {
 
     /**
      * 获取部门名称
-     *//*
+     */
     String getDeptName(Long deptId);
 
-    *//**
+    /**
      * 获取菜单的名称们(多个)
      *//*
     String getMenuNames(String menuIds);
@@ -106,15 +106,15 @@ public interface IConstantFactory {
 
     *//**
      * 获取性别名称
-     *//*
+     */
     String getSexName(String sexCode);
 
-    *//**
+    /**
      * 获取用户登录状态
-     *//*
+     */
     String getStatusName(String status);
 
-    *//**
+    /**
      * 获取菜单状态
      */
     String getMenuStatusName(String status);
@@ -131,10 +131,10 @@ public interface IConstantFactory {
 
     *//**
      * 获取子部门id
-     *//*
+     */
     List<Long> getSubDeptId(Long deptId);
 
-    *//**
+    /**
      * 获取所有父部门id
      *//*
     List<Long> getParentDeptIds(Long deptId);*/

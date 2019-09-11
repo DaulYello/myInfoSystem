@@ -22,13 +22,10 @@ import cn.stylefeng.roses.core.util.ToolUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.personal.info.myInfoSystem.core.common.constant.cache.Cache;
 import com.personal.info.myInfoSystem.core.common.constant.cache.CacheKey;
+import com.personal.info.myInfoSystem.core.common.constant.state.ManagerStatus;
 import com.personal.info.myInfoSystem.core.common.constant.state.MenuStatus;
-import com.personal.info.myInfoSystem.modular.system.entity.Menu;
-import com.personal.info.myInfoSystem.modular.system.entity.Role;
-import com.personal.info.myInfoSystem.modular.system.entity.User;
-import com.personal.info.myInfoSystem.modular.system.mapper.MenuMapper;
-import com.personal.info.myInfoSystem.modular.system.mapper.RoleMapper;
-import com.personal.info.myInfoSystem.modular.system.mapper.UserMapper;
+import com.personal.info.myInfoSystem.modular.system.entity.*;
+import com.personal.info.myInfoSystem.modular.system.mapper.*;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -47,10 +44,10 @@ import java.util.List;
 public class ConstantFactory implements IConstantFactory {
 
     private RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
-    /*
+
     private DeptMapper deptMapper = SpringContextHolder.getBean(DeptMapper.class);
     private DictMapper dictMapper = SpringContextHolder.getBean(DictMapper.class);
-    private DictTypeMapper dictTypeMapper = SpringContextHolder.getBean(DictTypeMapper.class);*/
+    private DictTypeMapper dictTypeMapper = SpringContextHolder.getBean(DictTypeMapper.class);
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
     private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
     /*private NoticeMapper noticeMapper = SpringContextHolder.getBean(NoticeMapper.class);*/
@@ -79,8 +76,8 @@ public class ConstantFactory implements IConstantFactory {
         }
     }
 
-    //@Override
-    /*@Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.ROLES_NAME + "'+#roleIds")
+    @Override
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.ROLES_NAME + "'+#roleIds")
     public String getRoleName(String roleIds) {
         if (ToolUtil.isEmpty(roleIds)) {
             return "";
@@ -94,9 +91,9 @@ public class ConstantFactory implements IConstantFactory {
             }
         }
         return StrUtil.removeSuffix(sb.toString(), ",");
-    }*/
+    }
 
-    //@Override
+    @Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_ROLE_NAME + "'+#roleId")
     public String getSingleRoleName(Long roleId) {
         if (0 == roleId) {
@@ -122,7 +119,7 @@ public class ConstantFactory implements IConstantFactory {
         return "";
     }
 
-    /*@Override
+    @Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.DEPT_NAME + "'+#deptId")
     public String getDeptName(Long deptId) {
         if (deptId == null) {
@@ -137,53 +134,53 @@ public class ConstantFactory implements IConstantFactory {
             return "";
         }
     }
-
-    @Override
-    public String getMenuNames(String menuIds) {
-        Long[] menus = Convert.toLongArray(menuIds);
-        StringBuilder sb = new StringBuilder();
-        for (Long menu : menus) {
-            Menu menuObj = menuMapper.selectById(menu);
-            if (ToolUtil.isNotEmpty(menuObj) && ToolUtil.isNotEmpty(menuObj.getName())) {
-                sb.append(menuObj.getName()).append(",");
+    /*
+        @Override
+        public String getMenuNames(String menuIds) {
+            Long[] menus = Convert.toLongArray(menuIds);
+            StringBuilder sb = new StringBuilder();
+            for (Long menu : menus) {
+                Menu menuObj = menuMapper.selectById(menu);
+                if (ToolUtil.isNotEmpty(menuObj) && ToolUtil.isNotEmpty(menuObj.getName())) {
+                    sb.append(menuObj.getName()).append(",");
+                }
             }
+            return StrUtil.removeSuffix(sb.toString(), ",");
         }
-        return StrUtil.removeSuffix(sb.toString(), ",");
-    }
 
-    @Override
-    public String getMenuName(Long menuId) {
-        if (ToolUtil.isEmpty(menuId)) {
-            return "";
-        } else {
-            Menu menu = menuMapper.selectById(menuId);
-            if (menu == null) {
+        @Override
+        public String getMenuName(Long menuId) {
+            if (ToolUtil.isEmpty(menuId)) {
                 return "";
             } else {
-                return menu.getName();
+                Menu menu = menuMapper.selectById(menuId);
+                if (menu == null) {
+                    return "";
+                } else {
+                    return menu.getName();
+                }
             }
         }
-    }
 
-    @Override
-    public Menu getMenuByCode(String code) {
-        if (ToolUtil.isEmpty(code)) {
-            return new Menu();
-        } else if (code.equals("0")) {
-            return new Menu();
-        } else {
-            Menu param = new Menu();
-            param.setCode(code);
-            QueryWrapper<Menu> queryWrapper = new QueryWrapper<>(param);
-            Menu menu = menuMapper.selectOne(queryWrapper);
-            if (menu == null) {
+        @Override
+        public Menu getMenuByCode(String code) {
+            if (ToolUtil.isEmpty(code)) {
+                return new Menu();
+            } else if (code.equals("0")) {
                 return new Menu();
             } else {
-                return menu;
+                Menu param = new Menu();
+                param.setCode(code);
+                QueryWrapper<Menu> queryWrapper = new QueryWrapper<>(param);
+                Menu menu = menuMapper.selectOne(queryWrapper);
+                if (menu == null) {
+                    return new Menu();
+                } else {
+                    return menu;
+                }
             }
         }
-    }
-*/
+    */
     @Override
     public String getMenuNameByCode(String code) {
         if (ToolUtil.isEmpty(code)) {
@@ -245,9 +242,9 @@ public class ConstantFactory implements IConstantFactory {
                 return notice.getTitle();
             }
         }
-    }
+    }*/
 
-    @Override
+
     public String getDictsByName(String name, String code) {
         DictType temp = new DictType();
         temp.setName(name);
@@ -276,11 +273,29 @@ public class ConstantFactory implements IConstantFactory {
     @Override
     public String getStatusName(String status) {
         return ManagerStatus.getDescription(status);
-    }*/
+    }
 
     @Override
     public String getMenuStatusName(String status) {
         return MenuStatus.getDescription(status);
+    }
+
+    @Override
+    public List<Long> getSubDeptId(Long deptId) {
+        ArrayList<Long> deptIds = new ArrayList<>();
+
+        if (deptId == null) {
+            return deptIds;
+        } else {
+            List<Dept> depts = this.deptMapper.likePids(deptId);
+            if (depts != null && depts.size() > 0) {
+                for (Dept dept : depts) {
+                    deptIds.add(dept.getDeptId());
+                }
+            }
+
+            return deptIds;
+        }
     }
 
     /*
@@ -304,23 +319,7 @@ public class ConstantFactory implements IConstantFactory {
         return LogObjectHolder.me().get().toString();
     }
 
-    @Override
-    public List<Long> getSubDeptId(Long deptId) {
-        ArrayList<Long> deptIds = new ArrayList<>();
 
-        if (deptId == null) {
-            return deptIds;
-        } else {
-            List<Dept> depts = this.deptMapper.likePids(deptId);
-            if (depts != null && depts.size() > 0) {
-                for (Dept dept : depts) {
-                    deptIds.add(dept.getDeptId());
-                }
-            }
-
-            return deptIds;
-        }
-    }
 
     @Override
     public List<Long> getParentDeptIds(Long deptId) {

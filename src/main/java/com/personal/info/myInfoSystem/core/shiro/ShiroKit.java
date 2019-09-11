@@ -274,17 +274,17 @@ public class ShiroKit {
     /**
      * 获取当前用户的部门数据范围的集合
      */
-    /*public static List<Long> getDeptDataScope() {
+    public static List<Long> getDeptDataScope() {
         Long deptId = getUser().getDeptId();
         List<Long> subDeptIds = ConstantFactory.me().getSubDeptId(deptId);
         subDeptIds.add(deptId);
         return subDeptIds;
-    }*/
+    }
 
     /**
      * 判断当前用户是否是超级管理员
      */
-    /*public static boolean isAdmin() {
+    public static boolean isAdmin() {
         List<Long> roleList = ShiroKit.getUser().getRoleList();
         for (Long integer : roleList) {
             String singleRoleTip = ConstantFactory.me().getSingleRoleTip(integer);
@@ -293,7 +293,7 @@ public class ShiroKit {
             }
         }
         return false;
-    }*/
+    }
 
     /**
      * 通过用户表的信息创建一个shiroUser对象
