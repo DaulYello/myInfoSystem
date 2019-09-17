@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.personal.info.myInfoSystem.core.node.TreeviewNode;
 import com.personal.info.myInfoSystem.core.node.ZTreeNode;
 import com.personal.info.myInfoSystem.modular.system.entity.Dept;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,12 +20,13 @@ import java.util.Map;
  * @author stylefeng
  * @since 2018-12-07
  */
+@Mapper
 public interface DeptMapper extends BaseMapper<Dept> {
 
     /**
      * 获取ztree的节点列表
      */
-    List<ZTreeNode> tree();
+    List<ZTreeNode> getDeptTree();
 
     /**
      * 获取所有部门列表
