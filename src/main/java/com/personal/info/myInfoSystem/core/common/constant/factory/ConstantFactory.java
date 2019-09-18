@@ -200,7 +200,7 @@ public class ConstantFactory implements IConstantFactory {
         }
     }
 
-    /*
+
     @Override
     public Long getMenuIdByCode(String code) {
         if (ToolUtil.isEmpty(code)) {
@@ -216,6 +216,7 @@ public class ConstantFactory implements IConstantFactory {
         }
     }
 
+    /*
     @Override
     public String getDictName(Long dictId) {
         if (ToolUtil.isEmpty(dictId)) {

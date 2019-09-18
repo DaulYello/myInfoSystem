@@ -66,7 +66,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
         top.layui.admin.open({
             type: 2,
             title: '添加用户',
-            content: Feng.ctxPath + '/mgr/user_add',
+            content: Huang.ctxPath + '/mgr/user_add',
             end: function () {
                 admin.getTempData('formOk') && table.reload(MgrUser.tableId);
             }
@@ -79,7 +79,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
     MgrUser.exportExcel = function () {
         var checkRows = table.checkStatus(MgrUser.tableId);
         if (checkRows.data.length === 0) {
-            Feng.error("请选择要导出的数据");
+            Huang.error("请选择要导出的数据");
         } else {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
@@ -95,7 +95,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
         top.layui.admin.open({
             type: 2,
             title: '编辑用户',
-            content: Feng.ctxPath + '/mgr/user_edit?userId=' + data.userId,
+            content: Huang.ctxPath + '/mgr/user_edit?userId=' + data.userId,
             end: function () {
                 admin.getTempData('formOk') && table.reload(MgrUser.tableId);
             }
@@ -109,16 +109,16 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
      */
     MgrUser.onDeleteUser = function (data) {
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/mgr/delete", function () {
+            var ajax = new $ax(Huang.ctxPath + "/mgr/delete", function () {
                 table.reload(MgrUser.tableId);
-                Feng.success("删除成功!");
+                Huang.success("删除成功!");
             }, function (data) {
-                Feng.error("删除失败!" + data.responseJSON.message + "!");
+                Huang.error("删除失败!" + data.responseJSON.message + "!");
             });
             ajax.set("userId", data.userId);
             ajax.start();
         };
-        Feng.confirm("是否删除用户" + data.account + "?", operation);
+        Huang.confirm("是否删除用户" + data.account + "?", operation);
     };
 
     /**
@@ -131,7 +131,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
             type: 2,
             title: '角色分配',
             area: ['300px', '400px'],
-            content: Feng.ctxPath + '/mgr/role_assign?userId=' + data.userId,
+            content: Huang.ctxPath + '/mgr/role_assign?userId=' + data.userId,
             end: function () {
                 table.reload(MgrUser.tableId);
             }
@@ -144,11 +144,11 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
      * @param data 点击按钮时候的行数据
      */
     MgrUser.resetPassword = function (data) {
-        Feng.confirm("是否重置密码为111111 ?", function () {
-            var ajax = new $ax(Feng.ctxPath + "/mgr/reset", function (data) {
-                Feng.success("重置密码成功!");
+        Huang.confirm("是否重置密码为111111 ?", function () {
+            var ajax = new $ax(Huang.ctxPath + "/mgr/reset", function (data) {
+                Huang.success("重置密码成功!");
             }, function (data) {
-                Feng.error("重置密码失败!");
+                Huang.error("重置密码失败!");
             });
             ajax.set("userId", data.userId);
             ajax.start();
@@ -163,19 +163,19 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
      */
     MgrUser.changeUserStatus = function (userId, checked) {
         if (checked) {
-            var ajax = new $ax(Feng.ctxPath + "/mgr/unfreeze", function (data) {
-                Feng.success("解除冻结成功!");
+            var ajax = new $ax(Huang.ctxPath + "/mgr/unfreeze", function (data) {
+                Huang.success("解除冻结成功!");
             }, function (data) {
-                Feng.error("解除冻结失败!");
+                Huang.error("解除冻结失败!");
                 table.reload(MgrUser.tableId);
             });
             ajax.set("userId", userId);
             ajax.start();
         } else {
-            var ajax = new $ax(Feng.ctxPath + "/mgr/freeze", function (data) {
-                Feng.success("冻结成功!");
+            var ajax = new $ax(Huang.ctxPath + "/mgr/freeze", function (data) {
+                Huang.success("冻结成功!");
             }, function (data) {
-                Feng.error("冻结失败!" + data.responseJSON.message + "!");
+                Huang.error("冻结失败!" + data.responseJSON.message + "!");
                 table.reload(MgrUser.tableId);
             });
             ajax.set("userId", userId);
@@ -186,7 +186,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + MgrUser.tableId,
-        url: Feng.ctxPath + '/mgr/list',
+        url: Huang.ctxPath + '/mgr/list',
         page: true,
         height: "full-98",
         cellMinWidth: 100,
@@ -197,7 +197,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
     laydate.render({
         elem: '#timeLimit',
         range: true,
-        max: Feng.currentDate()
+        max: Huang.currentDate()
     });
 
     //初始化左侧部门树

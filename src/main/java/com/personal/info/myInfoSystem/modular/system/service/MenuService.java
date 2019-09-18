@@ -48,7 +48,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
      * @author fengshuonan
      * @Date 2019/2/27 4:09 PM
      */
-    /*@Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public void updateMenu(MenuDto menuDto) {
 
         //如果菜单为空
@@ -70,8 +70,11 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         //查找该节点的子集合,并修改相应的pcodes和level(因为修改菜单后,层级可能变化了)
         updateSubMenuLevels(menu, resultMenu);
 
+        ShiroUser shiroUser = ShiroKit.getUserNotNull();
+        resultMenu.setUpdateUser(shiroUser.getId());
+
         this.updateById(resultMenu);
-    }*/
+    }
 
     /**
      * 更新所有子菜单的结构
@@ -81,7 +84,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
      * @author fengshuonan
      * @Date 2019/2/27 4:25 PM
      */
-    /*@Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public void updateSubMenuLevels(Menu oldMenu, Menu newMenu) {
 
         List<Menu> menus = menuMapper.getMenusLikePcodes(oldMenu.getCode());
@@ -106,7 +109,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
             this.updateById(menu);
         }
 
-    }*/
+    }
 
     /**
      * 删除菜单

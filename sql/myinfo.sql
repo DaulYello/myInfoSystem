@@ -194,3 +194,17 @@ INSERT INTO `sys_dict_type` (CODE,NAME,description,system_flag,STATUS,sort,creat
 INSERT INTO `sys_dict_type` (CODE,NAME,description,system_flag,STATUS,sort,create_time,create_user,update_time,update_user)VALUES ('STATUS', '状态', '', 'Y', 'ENABLE', 3, '2019-03-14 17:09:57', 1, NULL, NULL);
 INSERT INTO `sys_dict_type` (CODE,NAME,description,system_flag,STATUS,sort,create_time,create_user,update_time,update_user)VALUES ('ACCOUNT_STATUS', '账号状态', '', 'Y', 'ENABLE', 21112, '2019-03-14 17:10:10', 1, '2019-03-16 10:56:15', 1);
 INSERT INTO `sys_dict_type` (CODE,NAME,description,system_flag,STATUS,sort,create_time,create_user,update_time,update_user)VALUES ('DEL_FLAG', '是否删除', '', 'Y', 'ENABLE', 2, '2019-03-14 17:10:26', 1, '2019-03-27 16:26:31', 1);
+
+DROP TABLE IF EXISTS `sys_operation_log`;
+CREATE TABLE `sys_operation_log`  (
+  `operation_log_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `log_type` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '日志类型(字典)',
+  `log_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '日志名称',
+  `user_id` bigint(65) DEFAULT NULL COMMENT '用户id',
+  `class_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '类名称',
+  `method` text CHARACTER SET utf8 COLLATE utf8_bin COMMENT '方法名称',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `succeed` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '是否成功(字典)',
+  `message` text CHARACTER SET utf8 COLLATE utf8_bin COMMENT '备注',
+  PRIMARY KEY (`operation_log_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '操作日志' ROW_FORMAT = Dynamic;

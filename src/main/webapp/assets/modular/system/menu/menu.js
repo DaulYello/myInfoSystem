@@ -65,7 +65,7 @@ layui.use(['layer', 'form', 'ztree', 'laydate', 'admin', 'ax', 'table', 'treetab
         top.layui.admin.open({
             type: 2,
             title: '添加菜单',
-            content: Feng.ctxPath + '/menu/menu_add',
+            content: Huang.ctxPath + '/menu/menu_add',
             end: function () {
                 admin.getTempData('formOk') && Menu.initTable(Menu.tableId);
             }
@@ -78,7 +78,7 @@ layui.use(['layer', 'form', 'ztree', 'laydate', 'admin', 'ax', 'table', 'treetab
     Menu.exportExcel = function () {
         var checkRows = table.checkStatus(Menu.tableId);
         if (checkRows.data.length === 0) {
-            Feng.error("请选择要导出的数据");
+            Huang.error("请选择要导出的数据");
         } else {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
@@ -94,7 +94,7 @@ layui.use(['layer', 'form', 'ztree', 'laydate', 'admin', 'ax', 'table', 'treetab
         top.layui.admin.open({
             type: 2,
             title: '编辑菜单',
-            content: Feng.ctxPath + '/menu/menu_edit?menuId=' + data.menuId,
+            content: Huang.ctxPath + '/menu/menu_edit?menuId=' + data.menuId,
             end: function () {
                 admin.getTempData('formOk') && Menu.initTable(Menu.tableId);
             }
@@ -108,17 +108,17 @@ layui.use(['layer', 'form', 'ztree', 'laydate', 'admin', 'ax', 'table', 'treetab
      */
     Menu.onDeleteMenu = function (data) {
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/menu/remove", function () {
-                Feng.success("删除成功!");
+            var ajax = new $ax(Huang.ctxPath + "/menu/remove", function () {
+                Huang.success("删除成功!");
                 Menu.condition.menuId = "";
                 Menu.initTable(Menu.tableId);
             }, function (data) {
-                Feng.error("删除失败!" + data.responseJSON.message + "!");
+                Huang.error("删除失败!" + data.responseJSON.message + "!");
             });
             ajax.set("menuId", data.menuId);
             ajax.start();
         };
-        Feng.confirm("是否删除菜单" + data.name + "?", operation);
+        Huang.confirm("是否删除菜单" + data.name + "?", operation);
     };
 
     /**
@@ -127,7 +127,7 @@ layui.use(['layer', 'form', 'ztree', 'laydate', 'admin', 'ax', 'table', 'treetab
     Menu.initTable = function (menuId, data) {
         return treetable.render({
             elem: '#' + menuId,
-            url: Feng.ctxPath + '/menu/listTree',
+            url: Huang.ctxPath + '/menu/listTree',
             where: data,
             page: false,
             height: "full-98",
@@ -155,7 +155,7 @@ layui.use(['layer', 'form', 'ztree', 'laydate', 'admin', 'ax', 'table', 'treetab
     laydate.render({
         elem: '#timeLimit',
         range: true,
-        max: Feng.currentDate()
+        max: Huang.currentDate()
     });
 
     //初始化左侧部门树

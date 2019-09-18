@@ -47,7 +47,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
         top.layui.admin.open({
             type: 2,
             title: '添加角色',
-            content: Feng.ctxPath + '/role/role_add',
+            content: Huang.ctxPath + '/role/role_add',
             end: function () {
                 admin.getTempData('formOk') && table.reload(Role.tableId);
             }
@@ -60,7 +60,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
     Role.exportExcel = function () {
         var checkRows = table.checkStatus(Role.tableId);
         if (checkRows.data.length === 0) {
-            Feng.error("请选择要导出的数据");
+            Huang.error("请选择要导出的数据");
         } else {
             table.exportFile(tableResult.config.id, checkRows.data, 'xls');
         }
@@ -76,7 +76,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
         top.layui.admin.open({
             type: 2,
             title: '修改角色',
-            content: Feng.ctxPath + '/role/role_edit?roleId=' + data.roleId,
+            content: Huang.ctxPath + '/role/role_edit?roleId=' + data.roleId,
             end: function () {
                 admin.getTempData('formOk') && table.reload(Role.tableId);
             }
@@ -90,16 +90,16 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
      */
     Role.onDeleteRole = function (data) {
         var operation = function () {
-            var ajax = new $ax(Feng.ctxPath + "/role/remove", function () {
-                Feng.success("删除成功!");
+            var ajax = new $ax(Huang.ctxPath + "/role/remove", function () {
+                Huang.success("删除成功!");
                 table.reload(Role.tableId);
             }, function (data) {
-                Feng.error("删除失败!" + data.responseJSON.message + "!");
+                Huang.error("删除失败!" + data.responseJSON.message + "!");
             });
             ajax.set("roleId", data.roleId);
             ajax.start();
         };
-        Feng.confirm("是否删除角色 " + data.name + "?", operation);
+        Huang.confirm("是否删除角色 " + data.name + "?", operation);
     };
 
     /**
@@ -114,7 +114,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
             area: ['300px', '450px'], //宽高
             fix: false,
             maxmin: true,
-            content: Feng.ctxPath + '/role/role_assign/' + data.roleId,
+            content: Huang.ctxPath + '/role/role_assign/' + data.roleId,
             end: function () {
                 table.reload(Role.tableId);
             }
@@ -124,7 +124,7 @@ layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
     // 渲染表格
     var tableResult = table.render({
         elem: '#' + Role.tableId,
-        url: Feng.ctxPath + '/role/list',
+        url: Huang.ctxPath + '/role/list',
         page: true,
         height: "full-98",
         cellMinWidth: 100,

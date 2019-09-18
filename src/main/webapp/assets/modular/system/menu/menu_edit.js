@@ -20,7 +20,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax'], function () {
     admin.iframeAuto();
 
     //获取菜单信息
-    var ajax = new $ax(Feng.ctxPath + "/menu/getMenuInfo?menuId=" + Feng.getUrlParam("menuId"));
+    var ajax = new $ax(Huang.ctxPath + "/menu/getMenuInfo?menuId=" + Huang.getUrlParam("menuId"));
     var result = ajax.start();
     form.val('menuForm', result.data);
 
@@ -34,7 +34,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax'], function () {
             type: 2,
             title: '父级菜单',
             area: ['300px', '400px'],
-            content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            content: Huang.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             end: function () {
                 $("#pid").val(MenuInfoDlg.data.pid);
                 $("#pcodeName").val(MenuInfoDlg.data.pcodeName);
@@ -44,8 +44,8 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax'], function () {
 
     // 表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/menu/edit", function (data) {
-            Feng.success("修改成功！");
+        var ajax = new $ax(Huang.ctxPath + "/menu/edit", function (data) {
+            Huang.success("修改成功！");
 
             //传给上个页面，刷新table用
             admin.putTempData('formOk', true);
@@ -53,7 +53,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax'], function () {
             //关掉对话框
             admin.closeThisDialog();
         }, function (data) {
-            Feng.error("修改失败！" + data.responseJSON.message)
+            Huang.error("修改失败！" + data.responseJSON.message)
         });
         ajax.set(data.field);
         ajax.start();

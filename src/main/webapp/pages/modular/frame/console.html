@@ -291,7 +291,7 @@
                                 <ul>
                                     <li>spring boot升级到2.0版本</li>
                                     <li>简化前端所有的html，js，css等资源文件，由11.8MB缩减为4.8MB</li>
-                                    <li>新增手动增加标签页的方法，Feng.newCrontab(href,menuName)</li>
+                                    <li>新增手动增加标签页的方法，Huang.newCrontab(href,menuName)</li>
                                     <li>laydate时间插件和layer弹出层插件更新为官网最新，可以看着layui官网的文档直接开发啦</li>
                                     <li>去掉animate动画效果，加快页面响应速度</li>
                                     <li>修复登陆后重启应用造成404的bug</li>
@@ -662,7 +662,7 @@
 <!-- js部分 -->
 @/* 加入contextPath属性和session超时的配置 */
 <script type="text/javascript">
-    var Feng = {
+    var Huang = {
         ctxPath: "",
         addCtx: function (ctx) {
             if (this.ctxPath === "") {
@@ -670,7 +670,7 @@
             }
         }
     };
-    Feng.addCtx("${ctxPath}");
+    Huang.addCtx("${ctxPath}");
 </script>
 
 <script type="text/javascript" src="${ctxPath}/assets/common/layui/layui.js"></script>

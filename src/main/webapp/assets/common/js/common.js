@@ -1,21 +1,21 @@
 // 用common.js必须加上Feng.addCtx("${ctxPath}");
-Feng.info = function (info) {
+Huang.info = function (info) {
     top.layer.msg(info, {icon: 6});
 };
-Feng.success = function (info) {
+Huang.success = function (info) {
     top.layer.msg(info, {icon: 1});
 };
-Feng.error = function (info) {
+Huang.error = function (info) {
     top.layer.msg(info, {icon: 2});
 };
-Feng.confirm = function (tip, ensure) {
+Huang.confirm = function (tip, ensure) {
     top.layer.confirm(tip, {
         skin: 'layui-layer-admin'
     }, function () {
         ensure();
     });
 };
-Feng.currentDate = function () {
+Huang.currentDate = function () {
     // 获取当前日期
     var date = new Date();
 
@@ -41,7 +41,7 @@ Feng.currentDate = function () {
     // 最后拼接字符串，得到一个格式为(yyyy-MM-dd)的日期
     return date.getFullYear() + seperator + nowMonth + seperator + strDate;
 };
-Feng.getUrlParam = function (name) {
+Huang.getUrlParam = function (name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) {
@@ -50,7 +50,7 @@ Feng.getUrlParam = function (name) {
         return null;
     }
 };
-Feng.infoDetail = function (title, info) {
+Huang.infoDetail = function (title, info) {
     var display = "";
     if (typeof info === "string") {
         display = info;
@@ -71,7 +71,7 @@ Feng.infoDetail = function (title, info) {
         content: '<div style="padding: 20px;">' + display + '</div>'
     });
 };
-Feng.zTreeCheckedNodes = function (zTreeId) {
+Huang.zTreeCheckedNodes = function (zTreeId) {
     var zTree = $.fn.zTree.getZTreeObj(zTreeId);
     var nodes = zTree.getCheckedNodes();
     var ids = "";
@@ -80,13 +80,13 @@ Feng.zTreeCheckedNodes = function (zTreeId) {
     }
     return ids.substring(1);
 };
-Feng.closeAllLoading = function () {
+Huang.closeAllLoading = function () {
     layer.closeAll('loading');
 };
 
 // 以下代码是配置layui扩展模块的目录，每个页面都需要引入
 layui.config({
-    base: Feng.ctxPath + '/assets/common/module/'
+    base: Huang.ctxPath + '/assets/common/module/'
 }).extend({
     formSelects: 'formSelects/formSelects-v4',
     treetable: 'treetable-lay/treetable',
@@ -118,7 +118,7 @@ layui.config({
             if (sessionstatus === "timeout") {
 
                 //如果超时就处理 ，指定要跳转的页面
-                window.location = Feng.ctxPath + "/global/sessionError";
+                window.location = Huang.ctxPath + "/global/sessionError";
             }
         }
     });

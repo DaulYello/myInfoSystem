@@ -28,7 +28,7 @@
 
 @/* 加入contextPath属性和session超时的配置 */
 <script type="text/javascript">
-    var Feng = {
+    var Huang = {
         ctxPath: "",
         addCtx: function (ctx) {
             if (this.ctxPath === "") {
@@ -36,7 +36,7 @@
             }
         }
     };
-    Feng.addCtx("${ctxPath}");
+    Huang.addCtx("${ctxPath}");
 </script>
 <script type="text/javascript" src="${ctxPath}/assets/common/layui/layui.js"></script>
 <script type="text/javascript" src="${ctxPath}/assets/common/js/common.js"></script>
@@ -56,12 +56,12 @@
         };
 
         $("#saveButton").bind("click", function () {
-            var ids = Feng.zTreeCheckedNodes("zTree");
-            var ajax = new $ax(Feng.ctxPath + "/role/setAuthority", function (data) {
-                Feng.success("分配角色成功!");
+            var ids = Huang.zTreeCheckedNodes("zTree");
+            var ajax = new $ax(Huang.ctxPath + "/role/setAuthority", function (data) {
+                Huang.success("分配角色成功!");
                 parent.layer.close(ZTreeDlg.index);
             }, function (data) {
-                Feng.error("分配角色失败!" + data.responseJSON.message + "!");
+                Huang.error("分配角色失败!" + data.responseJSON.message + "!");
             });
             ajax.set("ids", ids);
             ajax.set("roleId", "${roleId}");

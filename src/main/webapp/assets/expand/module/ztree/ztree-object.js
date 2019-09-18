@@ -70,10 +70,10 @@ layui.define(['jquery','ax'], function (exports) {
          */
         loadNodes : function() {
             var zNodes = null;
-            var ajax = new $ax(Feng.ctxPath + this.url, function(data) {
+            var ajax = new $ax(Huang.ctxPath + this.url, function(data) {
                 zNodes = data;
             }, function(data) {
-                Feng.error("加载ztree信息失败!");
+                Huang.error("加载ztree信息失败!");
             });
             ajax.start();
             return zNodes;

@@ -1,21 +1,26 @@
 package com.personal.info.myInfoSystem.modular.system.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.personal.info.myInfoSystem.core.common.annotation.Permission;
 import com.personal.info.myInfoSystem.core.common.constant.Const;
+import com.personal.info.myInfoSystem.core.common.constant.factory.ConstantFactory;
 import com.personal.info.myInfoSystem.core.common.constant.page.PageInfo;
+import com.personal.info.myInfoSystem.core.common.exception.BizExceptionEnum;
+import com.personal.info.myInfoSystem.core.log.LogObjectHolder;
 import com.personal.info.myInfoSystem.core.node.ZTreeNode;
+import com.personal.info.myInfoSystem.modular.system.entity.Menu;
 import com.personal.info.myInfoSystem.modular.system.model.MenuDto;
 import com.personal.info.myInfoSystem.modular.system.service.MenuService;
+import com.personal.info.myInfoSystem.modular.system.service.UserService;
 import com.personal.info.myInfoSystem.modular.system.warpper.MenuWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -27,10 +32,13 @@ import java.util.Map;
 @RequestMapping("/menu")
 public class MenuController extends BaseController {
 
-    private static final String PREFIX = "/modular/system/menu";
+    private static final String PREFIX = "/modular/system/menu/";
 
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 菜单列表页面
@@ -75,6 +83,38 @@ public class MenuController extends BaseController {
         return SUCCESS_TIP;
     }
 
+
+    @Permission(Const.ADMIN_NAME)
+    @RequestMapping("/menu_edit")
+    public String menuEdit(@RequestParam(required = true) String menuId, Model model){
+        if (ToolUtil.isEmpty(menuId)) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+
+        //获取菜单当前信息，记录日志用
+        Menu menu = this.menuService.getById(menuId);
+        LogObjectHolder.me().set(menu);
+        /*model.addAttribute("menuId",menuId);*/
+        return PREFIX+"menu_edit.html";
+    }
+
+    @RequestMapping("/getMenuInfo")
+    @ResponseBody
+    public ResponseData getMenuInfo(@RequestParam(required = true) String menuId){
+        if (ToolUtil.isEmpty(menuId)) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+
+        Menu menu = this.menuService.getById(menuId);
+
+        MenuDto menuDto = new MenuDto();
+        BeanUtil.copyProperties(menu,menuDto);
+        //设置pid和父级名称
+        menuDto.setPid(ConstantFactory.me().getMenuIdByCode(menuDto.getPcode()));
+        menuDto.setPcodeName(ConstantFactory.me().getMenuNameByCode(menuDto.getPcode()));
+        return ResponseData.success(menuDto);
+    }
+
     /**
      * 获取角色的菜单列表
      *
@@ -90,6 +130,42 @@ public class MenuController extends BaseController {
         } else {
             return this.menuService.menuTreeListByMenuIds(menuIds);
         }
+    }
+
+    /**
+     * 编辑菜单
+     * @author huangshuang
+     * @Date 2019/9/18 5:54 PM
+     */
+    @RequestMapping(value = "/edit")
+    @ResponseBody
+    public ResponseData editMenuById(MenuDto menuDto) {
+
+        this.menuService.updateMenu(menuDto);
+
+        //刷新当前用户菜单
+        this.userService.refreshCurrentUser();
+
+        return SUCCESS_TIP;
+    }
+
+    /**
+     * 编辑菜单
+     * @author huangshuang
+     * @Date 2019/9/18 5:54 PM
+     */
+    @RequestMapping(value = "/remove")
+    @ResponseBody
+    public ResponseData remove(@RequestParam(value = "menuId" ,required = true) Long menuId) {
+
+        if (ToolUtil.isEmpty(menuId)){
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+
+        this.menuService.delMenuContainSubMenus(menuId);
+
+
+        return SUCCESS_TIP;
     }
 
 

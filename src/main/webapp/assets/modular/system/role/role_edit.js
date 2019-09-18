@@ -19,7 +19,7 @@ layui.use(['layer', 'form', 'admin', 'ax'], function () {
     admin.iframeAuto();
 
     //初始化角色的详情数据
-    var ajax = new $ax(Feng.ctxPath + "/role/view/" + Feng.getUrlParam("roleId"));
+    var ajax = new $ax(Huang.ctxPath + "/role/view/" + Huang.getUrlParam("roleId"));
     var result = ajax.start();
     form.val('roleForm',result.data);
 
@@ -33,7 +33,7 @@ layui.use(['layer', 'form', 'admin', 'ax'], function () {
             type: 2,
             title: '父级角色选择',
             area: ['300px', '200px'],
-            content: Feng.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
+            content: Huang.ctxPath + '/system/commonTree?formName=' + formName + "&formId=" + formId + "&treeUrl=" + treeUrl,
             end: function () {
                 $("#pid").val(RoleInfoDlg.data.pid);
                 $("#pName").val(RoleInfoDlg.data.pName);
@@ -43,8 +43,8 @@ layui.use(['layer', 'form', 'admin', 'ax'], function () {
 
     // 表单提交事件
     form.on('submit(btnSubmit)', function (data) {
-        var ajax = new $ax(Feng.ctxPath + "/role/edit", function (data) {
-            Feng.success("修改成功!");
+        var ajax = new $ax(Huang.ctxPath + "/role/edit", function (data) {
+            Huang.success("修改成功!");
 
             //传给上个页面，刷新table用
             admin.putTempData('formOk', true);
@@ -52,7 +52,7 @@ layui.use(['layer', 'form', 'admin', 'ax'], function () {
             //关掉对话框
             admin.closeThisDialog();
         }, function (data) {
-            Feng.error("修改失败!" + data.responseJSON.message + "!");
+            Huang.error("修改失败!" + data.responseJSON.message + "!");
         });
         ajax.set(data.field);
         ajax.start();
