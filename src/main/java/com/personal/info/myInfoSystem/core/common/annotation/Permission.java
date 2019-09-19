@@ -19,7 +19,10 @@ import java.lang.annotation.*;
 
 /**
  * 权限注解 用于检查权限 规定访问权限
- *
+ * @Retention 作用是定义被它所注解的注解保留多久。一共有三种策略，定义在RetentionPolicy枚举中:如下有说明
+ * @Param RetentionPolicy.RUNTIME(一直保留到运行是,可以通过反射获取注解信息)、RetentionPolicy.CLASS(默认是该策略,被编译进class文件，
+ * 但是不被VM运行时保留)、RetentionPolicy.SOURCE(注解在编译时就被忽略)
+ * @Target 指定定义的这个注解@Permission是使用在什么地方，下面是指使用在方法上
  * @example @Permission({role1,role2})
  * @example @Permission
  */

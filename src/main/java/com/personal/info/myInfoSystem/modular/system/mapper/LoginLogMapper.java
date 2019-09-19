@@ -2,7 +2,9 @@ package com.personal.info.myInfoSystem.modular.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.personal.info.myInfoSystem.modular.system.entity.LoginLog;
 import com.personal.info.myInfoSystem.modular.system.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -16,7 +18,8 @@ import java.util.Map;
  * @author stylefeng
  * @since 2018-12-07
  */
-public interface LoginLogMapper extends BaseMapper<User> {
+@Mapper
+public interface LoginLogMapper extends BaseMapper<LoginLog> {
 
     /**
      * 获取登录日志

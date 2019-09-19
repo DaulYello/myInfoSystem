@@ -208,3 +208,18 @@ CREATE TABLE `sys_operation_log`  (
   `message` text CHARACTER SET utf8 COLLATE utf8_bin COMMENT '备注',
   PRIMARY KEY (`operation_log_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '操作日志' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for sys_login_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_login_log`;
+CREATE TABLE `sys_login_log`  (
+  `login_log_id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `log_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '日志名称',
+  `user_id` BIGINT(20) DEFAULT NULL COMMENT '管理员id',
+  `create_time` DATETIME(0) DEFAULT NULL COMMENT '创建时间',
+  `succeed` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '是否执行成功',
+  `message` TEXT CHARACTER SET utf8 COLLATE utf8_bin COMMENT '具体消息',
+  `ip_address` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '登录ip',
+  PRIMARY KEY (`login_log_id`) USING BTREE
+) ENGINE = INNODB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '登录记录' ROW_FORMAT = DYNAMIC;

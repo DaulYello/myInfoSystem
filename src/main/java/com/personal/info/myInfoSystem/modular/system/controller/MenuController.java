@@ -5,8 +5,10 @@ import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.core.util.ToolUtil;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
+import com.personal.info.myInfoSystem.core.common.annotation.BussinessLog;
 import com.personal.info.myInfoSystem.core.common.annotation.Permission;
 import com.personal.info.myInfoSystem.core.common.constant.Const;
+import com.personal.info.myInfoSystem.core.common.constant.dictmap.MenuDict;
 import com.personal.info.myInfoSystem.core.common.constant.factory.ConstantFactory;
 import com.personal.info.myInfoSystem.core.common.constant.page.PageInfo;
 import com.personal.info.myInfoSystem.core.common.exception.BizExceptionEnum;
@@ -94,7 +96,6 @@ public class MenuController extends BaseController {
         //获取菜单当前信息，记录日志用
         Menu menu = this.menuService.getById(menuId);
         LogObjectHolder.me().set(menu);
-        /*model.addAttribute("menuId",menuId);*/
         return PREFIX+"menu_edit.html";
     }
 
@@ -133,11 +134,13 @@ public class MenuController extends BaseController {
     }
 
     /**
-     * 编辑菜单
+     * 修改菜单
      * @author huangshuang
      * @Date 2019/9/18 5:54 PM
      */
+    @Permission(Const.ADMIN_NAME)
     @RequestMapping(value = "/edit")
+    @BussinessLog(value = "修改菜单",key = "name",dict = MenuDict.class)
     @ResponseBody
     public ResponseData editMenuById(MenuDto menuDto) {
 

@@ -18,7 +18,13 @@ package com.personal.info.myInfoSystem.core.log.factory;
 
 import cn.stylefeng.roses.core.util.SpringContextHolder;
 import cn.stylefeng.roses.core.util.ToolUtil;
+import com.personal.info.myInfoSystem.core.common.constant.state.LogSucceed;
+import com.personal.info.myInfoSystem.core.common.constant.state.LogType;
 import com.personal.info.myInfoSystem.core.log.LogManager;
+import com.personal.info.myInfoSystem.modular.system.entity.LoginLog;
+import com.personal.info.myInfoSystem.modular.system.entity.OperationLog;
+import com.personal.info.myInfoSystem.modular.system.mapper.LoginLogMapper;
+import com.personal.info.myInfoSystem.modular.system.mapper.OperationLogMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,12 +38,12 @@ import java.util.TimerTask;
  */
 public class LogTaskFactory {
 
-    /*private static Logger logger = LoggerFactory.getLogger(LogManager.class);
+    private static Logger logger = LoggerFactory.getLogger(LogManager.class);
     private static LoginLogMapper loginLogMapper = SpringContextHolder.getBean(LoginLogMapper.class);
     private static OperationLogMapper operationLogMapper = SpringContextHolder.getBean(OperationLogMapper.class);
 
     public static TimerTask loginLog(final Long userId, final String ip) {
-        *//*return new TimerTask() {
+        return new TimerTask() {
             @Override
             public void run() {
                 try {
@@ -47,8 +53,8 @@ public class LogTaskFactory {
                     logger.error("创建登录日志异常!", e);
                 }
             }
-        };*//*
-        class SonOne extends TimerTask{
+        };
+        /*class SonOne extends TimerTask{
             @Override
             public void run() {
                 try {
@@ -59,7 +65,7 @@ public class LogTaskFactory {
                 }
             }
         }
-        return new SonOne();
+        return new SonOne();*/
     }
 
 
@@ -121,5 +127,5 @@ public class LogTaskFactory {
                 }
             }
         };
-    }*/
+    }
 }
