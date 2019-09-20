@@ -55,6 +55,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 
     /**
      * 权限认证  ---授权信息
+     * //AuthorizingRealm类，继承AuthorizingRealm类的doGetAuthorizationInfo方法
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {

@@ -34,9 +34,10 @@ public class Contrast {
                 if ("serialVersionUID".equals(field.getName())) {
                     continue;
                 }
+                // 获取bean的某个属性的描述符
                 PropertyDescriptor pd = new PropertyDescriptor(field.getName(), clazz);
-                Method getMethod = pd.getReadMethod();//获得用于读取属性值的方法；
-                Object o1 = getMethod.invoke(pojo1);
+                Method getMethod = pd.getReadMethod(); //获得用于读取属性值的方法；
+                Object o1 = getMethod.invoke(pojo1); // 读取属性值
                 Object o2 = pojo2.get(StrUtil.lowerFirst(getMethod.getName().substring(3)));
                 if (o1 == null || o2 == null) {
                     continue;
