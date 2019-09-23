@@ -3,6 +3,8 @@ package com.personal.info.myInfoSystem.modular.system.controller;
 import cn.hutool.core.bean.BeanUtil;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.toolkit.SqlRunner;
+import com.personal.info.myInfoSystem.core.common.annotation.BussinessLog;
 import com.personal.info.myInfoSystem.core.common.annotation.Permission;
 import com.personal.info.myInfoSystem.core.common.constant.Const;
 import com.personal.info.myInfoSystem.core.common.constant.page.PageFactory;
@@ -59,5 +61,14 @@ public class LogController extends BaseController {
         OperationLog operationLog = logService.getById(id);
         Map<String, Object> stringObjectMap = BeanUtil.beanToMap(operationLog);
         return super.warpObject(new LogWrapper(stringObjectMap));
+    }
+
+    @BussinessLog(value = "清空业务日志")
+    @Permission(Const.ADMIN_NAME)
+    @RequestMapping("/delLog")
+    @ResponseBody
+    public Object delLog(){
+        SqlRunner.db().delete("delete from sys_operation_log");
+        return SUCCESS_TIP;
     }
 }

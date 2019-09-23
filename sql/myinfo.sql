@@ -223,3 +223,18 @@ CREATE TABLE `sys_login_log`  (
   `ip_address` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '登录ip',
   PRIMARY KEY (`login_log_id`) USING BTREE
 ) ENGINE = INNODB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '登录记录' ROW_FORMAT = DYNAMIC;
+
+
+-- ----------------------------
+-- Table structure for sys_file_info
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_file_info`;
+CREATE TABLE `sys_file_info`  (
+  `file_id` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '主键id',
+  `file_data` TEXT CHARACTER SET utf8 COLLATE utf8_bin COMMENT 'base64编码的文件',
+  `create_time` DATETIME(0) DEFAULT NULL COMMENT '创建时间',
+  `update_time` DATETIME(0) DEFAULT NULL COMMENT '修改时间',
+  `create_user` BIGINT(20) DEFAULT NULL COMMENT '创建用户',
+  `update_user` BIGINT(20) DEFAULT NULL COMMENT '修改用户',
+  PRIMARY KEY (`file_id`) USING BTREE
+) ENGINE = INNODB CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '文件信息表' ROW_FORMAT = DYNAMIC;
