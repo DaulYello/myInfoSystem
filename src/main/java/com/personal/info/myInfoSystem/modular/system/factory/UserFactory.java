@@ -18,6 +18,7 @@ package com.personal.info.myInfoSystem.modular.system.factory;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.stylefeng.roses.core.util.ToolUtil;
+import com.personal.info.myInfoSystem.core.common.constant.state.ManagerStatus;
 import com.personal.info.myInfoSystem.modular.system.entity.User;
 import com.personal.info.myInfoSystem.modular.system.model.UserDto;
 import org.springframework.beans.BeanUtils;
@@ -37,14 +38,15 @@ public class UserFactory {
     /**
      * 根据请求创建实体
      */
-    public static User createUser(UserDto userDto, String md5Password, String salt) {
+    public static User createUser(UserDto userDto, String md5Password, String salt, Long id) {
         if (userDto == null) {
             return null;
         } else {
             User user = new User();
             BeanUtils.copyProperties(userDto, user);
             user.setCreateTime(new Date());
-            //user.setStatus(ManagerStatus.OK.getCode());
+            user.setCreateUser(id);
+            user.setStatus(ManagerStatus.OK.getCode());
             user.setPassword(md5Password);
             user.setSalt(salt);
             return user;
@@ -54,7 +56,7 @@ public class UserFactory {
     /**
      * 更新user
      */
-    public static User editUser(UserDto newUser, User oldUser) {
+    public static User editUser(UserDto newUser, User oldUser, Long id) {
         if (newUser == null || oldUser == null) {
             return oldUser;
         } else {
@@ -79,6 +81,7 @@ public class UserFactory {
             if (ToolUtil.isNotEmpty(newUser.getPhone())) {
                 oldUser.setPhone(newUser.getPhone());
             }
+            oldUser.setUpdateUser(id);
             return oldUser;
         }
     }

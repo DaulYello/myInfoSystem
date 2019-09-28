@@ -61,12 +61,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         if (theUser != null) {
             throw new ServiceException(BizExceptionEnum.USER_ALREADY_REG);
         }
-
         // 完善账号信息
         String salt = ShiroKit.getRandomSalt(5);
         String password = ShiroKit.md5(user.getPassword(), salt);
 
-        this.save(UserFactory.createUser(user, password, salt));
+        this.save(UserFactory.createUser(user, password, salt,ShiroKit.getUserNotNull().getId()));
     }
 
     /**
@@ -78,13 +77,13 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public void editUser(UserDto user) {
         User oldUser = this.getById(user.getUserId());
 
+        ShiroUser shiroUser = ShiroKit.getUserNotNull();
         if (ShiroKit.hasRole(Const.ADMIN_NAME)) {
-            this.updateById(UserFactory.editUser(user, oldUser));
+            this.updateById(UserFactory.editUser(user, oldUser, shiroUser.getId()));
         } else {
             this.assertAuth(user.getUserId());
-            ShiroUser shiroUser = ShiroKit.getUserNotNull();
-            if (shiroUser.getId().equals(user.getUserId())) {
-                this.updateById(UserFactory.editUser(user, oldUser));
+            if (shiroUser.getId().equals(user.getUserId())) {//如果不是超级管理员，普通用户只能自己修改自己的信息
+                this.updateById(UserFactory.editUser(user, oldUser,shiroUser.getId()));
             } else {
                 throw new ServiceException(BizExceptionEnum.NO_PERMITION);
             }
@@ -194,11 +193,10 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * @Date 2018/12/24 22:44
      */
     public void assertAuth(Long userId) {
-        /*if (ShiroKit.isAdmin()) {
+        if (ShiroKit.isAdmin()) {
             return;
-        }*/
-        //List<Long> deptDataScope = ShiroKit.getDeptDataScope();
-        List<Long> deptDataScope = new ArrayList<>();
+        }
+        List<Long> deptDataScope = ShiroKit.getDeptDataScope();
         User user = this.getById(userId);
         Long deptId = user.getDeptId();
         if (deptDataScope.contains(deptId)) {

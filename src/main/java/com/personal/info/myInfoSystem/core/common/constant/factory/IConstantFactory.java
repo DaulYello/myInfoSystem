@@ -55,7 +55,7 @@ public interface IConstantFactory {
     String getSingleRoleName(Long roleId);
 
     /**
-     * 通过角色id获取角色英文名称
+     * 通过角色id获取角色名称 flag=true英文,flag=flase 中文
      */
     String getSingleRoleTip(Long roleId);
 

@@ -1,16 +1,24 @@
 package com.personal.info.myInfoSystem.modular.system.service;
 
 import cn.hutool.core.convert.Convert;
+import cn.stylefeng.roses.core.util.ToolUtil;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.personal.info.myInfoSystem.core.common.constant.page.PageFactory;
+import com.personal.info.myInfoSystem.core.common.exception.BizExceptionEnum;
+import com.personal.info.myInfoSystem.core.node.ZTreeNode;
+import com.personal.info.myInfoSystem.core.shiro.ShiroKit;
 import com.personal.info.myInfoSystem.modular.system.entity.Relation;
 import com.personal.info.myInfoSystem.modular.system.entity.Role;
 import com.personal.info.myInfoSystem.modular.system.mapper.RelationMapper;
 import com.personal.info.myInfoSystem.modular.system.mapper.RoleMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -38,6 +46,7 @@ public class RoleService extends ServiceImpl<RoleMapper,Role> {
      * @param roleId
      * @param ids
      */
+    @Transactional(rollbackFor = Exception.class)
     public void setAuthority(Long roleId, String ids) {
 
         //删除该角色的所有权限
@@ -54,5 +63,24 @@ public class RoleService extends ServiceImpl<RoleMapper,Role> {
         //刷新当前用户权限
         this.userService.refreshCurrentUser();
 
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void addRole(Role role) {
+
+        if (ToolUtil.isOneEmpty(role.getName(),role.getDescription(),role.getPid())){
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+
+        role.setCreateUser(ShiroKit.getUserNotNull().getId());
+
+        role.setCreateTime(new Date());
+
+        this.save(role);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<ZTreeNode> getRoleTreeList() {
+        return this.roleMapper.roleTreeList();
     }
 }

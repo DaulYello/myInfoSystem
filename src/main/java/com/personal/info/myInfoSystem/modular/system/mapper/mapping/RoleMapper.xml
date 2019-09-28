@@ -23,8 +23,19 @@
 
     <select id="selectRoles" resultType="map">
         select
-        <include refid="Base_Column_List"/>
-        from sys_role
+        s.role_id AS "roleId",
+        s.pid AS "pid",
+        s.name AS "name",
+        s.description AS "description",
+        s.sort AS "sort",
+        s.version AS "version",
+        s.create_time AS "createTime",
+        s.update_time AS "updateTime",
+        s.create_user AS "createUser",
+        s.update_user AS "updateUser",
+        r.`name` AS "pName"
+        from sys_role s
+        LEFT JOIN sys_role r ON s.`pid`= r.`role_id`
         <if test="condition != null">
             where name like CONCAT('%',#{condition},'%')
         </if>
