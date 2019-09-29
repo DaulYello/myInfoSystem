@@ -21,6 +21,7 @@ import com.personal.info.myInfoSystem.core.shiro.ShiroUser;
 import com.personal.info.myInfoSystem.modular.system.entity.Role;
 import com.personal.info.myInfoSystem.modular.system.entity.User;
 import com.personal.info.myInfoSystem.modular.system.service.RoleService;
+import com.personal.info.myInfoSystem.modular.system.service.UserService;
 import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -42,13 +44,15 @@ public class RoleController extends BaseController {
 
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("")
     public String index(){
         return PREFIX+"role.html";
     }
 
-    @Permission
+    @Permission(Const.ADMIN_NAME)
     @RequestMapping("/list")
     @ResponseBody
     public Object list(@RequestParam(value = "roleName",required = false) String roleName){
@@ -140,8 +144,21 @@ public class RoleController extends BaseController {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
         }
         role.setCreateTime(new Date());
-        role.setCreateUser(ShiroKit.getUserNotNull().getId());
-        this.roleService.save(role);
+        role.setUpdateUser(ShiroKit.getUserNotNull().getId());
+        this.roleService.updateById(role);
         return SUCCESS_TIP;
+    }
+
+    @RequestMapping("roleTreeListByUserId/{userId}")
+    @ResponseBody
+    public List<ZTreeNode> getRoleTreeListByUserId(@PathVariable Long userId){
+        User user = this.userService.getById(userId);
+        String roleStr = user.getRoleId();
+        if (ToolUtil.isEmpty(roleStr)){
+            return this.roleService.getRoleTreeList();
+        }else{
+            String[] roleArray = roleStr.split(",");
+            return roleService.getRoleTreeListByIds(roleArray);
+        }
     }
 }

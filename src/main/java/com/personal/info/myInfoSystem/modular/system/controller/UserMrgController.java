@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.personal.info.myInfoSystem.core.common.annotation.BussinessLog;
 import com.personal.info.myInfoSystem.core.common.annotation.Permission;
 import com.personal.info.myInfoSystem.core.common.constant.Const;
+import com.personal.info.myInfoSystem.core.common.constant.dictmap.RoleDict;
 import com.personal.info.myInfoSystem.core.common.constant.dictmap.UserDict;
 import com.personal.info.myInfoSystem.core.common.constant.factory.ConstantFactory;
 import com.personal.info.myInfoSystem.core.common.constant.page.PageFactory;
@@ -24,8 +25,8 @@ import com.personal.info.myInfoSystem.modular.system.service.UserService;
 import com.personal.info.myInfoSystem.modular.system.warpper.UserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -163,5 +164,48 @@ public class UserMrgController extends BaseController {
         return SUCCESS_TIP;
     }
 
+    @Permission
+    @RequestMapping("/role_assign")
+    public String roleAssign(@RequestParam Long userId, Model model){
+        if (ToolUtil.isEmpty(userId)){
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        model.addAttribute("userId",userId);
+        return PREFIX+"user_roleassign.html";
+    }
+
+    @Permission
+    @BussinessLog(value = "角色分配",key = "userId,roleIds",dict = UserDict.class)
+    @RequestMapping("/setRole")
+    @ResponseBody
+    public ResponseData setRole(@RequestParam Long userId,@RequestParam String roleIds){
+        if (ToolUtil.isOneEmpty(userId,roleIds)){
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        if (userId.equals(Const.ADMIN_ID)){
+            throw new ServiceException(BizExceptionEnum.CANT_CHANGE_ADMIN);
+        }
+        //判断当前登录用户是否有修改userId这个用户的权限
+        this.userService.assertAuth(userId);
+        this.userService.setRoles(userId,roleIds);
+        return SUCCESS_TIP;
+    }
+
+    @Permission
+    @BussinessLog(value = "重置密码",key = "userId",dict = UserDict.class)
+    @RequestMapping("/reset")
+    @ResponseBody
+    public ResponseData reset(@RequestParam Long userId){
+        if (ToolUtil.isEmpty(userId)){
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        //判断当前登录用户是否有修改userId这个用户的权限
+        this.userService.assertAuth(userId);
+        User user = this.userService.getById(userId);
+        user.setSalt(ShiroKit.getRandomSalt(5));
+        user.setPassword(ShiroKit.md5(Const.DEFAULT_PWD,user.getSalt()));
+        this.userService.updateById(user);
+        return SUCCESS_TIP;
+    }
 
 }

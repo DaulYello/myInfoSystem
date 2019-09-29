@@ -83,4 +83,8 @@ public class RoleService extends ServiceImpl<RoleMapper,Role> {
     public List<ZTreeNode> getRoleTreeList() {
         return this.roleMapper.roleTreeList();
     }
+
+    public List<ZTreeNode> getRoleTreeListByIds(String[] roleArray) {
+        return this.roleMapper.roleTreeListByRoleId(roleArray);
+    }
 }

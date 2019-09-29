@@ -34,12 +34,12 @@ public interface Const {
     /**
      * 默认欢迎界面的提示
      */
-    String DEFAULT_WELCOME_TIP = "欢迎使用myInfoSystem管理系统!";
+    String DEFAULT_WELCOME_TIP = "欢迎使用MEIMS管理系统!";
 
     /**
      * 系统默认的管理员密码
      */
-    String DEFAULT_PWD = "111111";
+    String DEFAULT_PWD = "123456";
 
     /**
      * 管理员角色的名字

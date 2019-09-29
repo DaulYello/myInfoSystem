@@ -59,7 +59,7 @@ public class MenuController extends BaseController {
         return treeList;
     }
 
-    @Permission(Const.ADMIN_NAME)
+    @Permission
     @RequestMapping("/listTree")
     @ResponseBody
     public Object listTree(@RequestParam(required = false) String menuName,

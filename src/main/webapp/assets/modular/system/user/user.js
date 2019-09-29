@@ -144,7 +144,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
      * @param data 点击按钮时候的行数据
      */
     MgrUser.resetPassword = function (data) {
-        Huang.confirm("是否重置密码为111111 ?", function () {
+        Huang.confirm("是否重置密码为123456 ?", function () {
             var ajax = new $ax(Huang.ctxPath + "/mgr/reset", function (data) {
                 Huang.success("重置密码成功!");
             }, function (data) {
