@@ -16,6 +16,7 @@ import com.personal.info.myInfoSystem.core.shiro.ShiroUser;
 import com.personal.info.myInfoSystem.modular.system.entity.FileInfo;
 import com.personal.info.myInfoSystem.modular.system.entity.User;
 import com.personal.info.myInfoSystem.modular.system.factory.UserFactory;
+import com.personal.info.myInfoSystem.modular.system.model.SystemHardwareInfo;
 import com.personal.info.myInfoSystem.modular.system.service.FileInfoService;
 import com.personal.info.myInfoSystem.modular.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -167,6 +168,23 @@ public class SystemController extends BaseController {
         fileInfoService.uploadAvatar(avatar);
 
         return SUCCESS_TIP;
+    }
+
+    /**
+     * 系统硬件信息页面
+     *
+     * @author huangshuang
+     * @Date 2019/12/24 22:43
+     */
+    @RequestMapping("/systemInfo")
+    public String systemInfo(Model model) {
+
+        SystemHardwareInfo systemHardwareInfo = new SystemHardwareInfo();
+        systemHardwareInfo.copyTo();
+
+        model.addAttribute("server", systemHardwareInfo);
+
+        return "/modular/frame/systemInfo.html";
     }
 
 
