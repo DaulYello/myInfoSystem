@@ -13,7 +13,7 @@ public class MyInfoSystemApplication {
 	private final static Logger LOGGER = LoggerFactory.getLogger(MyInfoSystemApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(MyInfoSystemApplication.class, args);
-		LOGGER.info(MyInfoSystemApplication.class.getSimpleName()+" is success!");
+		LOGGER.debug(MyInfoSystemApplication.class.getSimpleName()+" is success!");
 	}
 
 }
