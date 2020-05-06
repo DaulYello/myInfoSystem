@@ -113,7 +113,7 @@ public class ApiController extends BaseController {
         System.out.println("xxxx");
 
         //@RequestBody Map<String,List<Object>> map
-        /*List<TextDetection> textDetections = JSONObject.parseArray(JSONObject.toJSONString(map.get("TextDetections").get(0)),TextDetection.class);
+        //List<TextDetection> textDetections = JSONObject.parseArray(JSONObject.toJSONString(map.get("TextDetections").get(0)),TextDetection.class);
 
         //设置纸张大小
         Document document = new Document(PageSize.A4);
@@ -141,7 +141,6 @@ public class ApiController extends BaseController {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-*/
 
         return null;
     }
