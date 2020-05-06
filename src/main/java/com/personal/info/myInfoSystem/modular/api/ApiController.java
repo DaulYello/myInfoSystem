@@ -17,6 +17,9 @@ package com.personal.info.myInfoSystem.modular.api;
 
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ErrorResponseData;
+import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import com.alibaba.fastjson.JSONObject;
+import com.lowagie.text.Document;
 import com.personal.info.myInfoSystem.core.shiro.ShiroKit;
 import com.personal.info.myInfoSystem.core.shiro.ShiroUser;
 import com.personal.info.myInfoSystem.core.util.JwtTokenUtil;
@@ -28,12 +31,22 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.rtf.RtfWriter2;
+import com.personal.info.myInfoSystem.modular.system.entity.TextDetection;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 接口控制器提供
@@ -44,6 +57,8 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/myInfoApi")
 public class ApiController extends BaseController {
+
+    private static final String filepath = "/Users/huangshuang/Documents/orc处理后的文本/中寨黄姓氏修谱.doc";
 
     @Autowired
     private UserMapper userMapper;
@@ -89,6 +104,46 @@ public class ApiController extends BaseController {
     @RequestMapping(value = "/test", method = RequestMethod.POST)
     public Object test() {
         return SUCCESS_TIP;
+    }
+
+    @PostMapping("/context/deal")
+    @ResponseBody
+    public ResponseData dealPictureContext(@RequestBody List<TextDetection> textDetections) {
+
+        System.out.println("xxxx");
+
+        //@RequestBody Map<String,List<Object>> map
+        /*List<TextDetection> textDetections = JSONObject.parseArray(JSONObject.toJSONString(map.get("TextDetections").get(0)),TextDetection.class);
+
+        //设置纸张大小
+        Document document = new Document(PageSize.A4);
+
+        try {
+            for (int i = 1; i < textDetections.size() - 2; i++) {
+
+                //创建word文档
+                RtfWriter2.getInstance(document, new FileOutputStream(filepath));
+                //打开文档
+                document.open();
+                //创建段落
+                Paragraph p = new Paragraph("", new Font(Font.NORMAL, 10, Font.BOLD, new Color(0, 0, 0)));
+                //设置段落为居中对齐
+                p.setAlignment(Paragraph.ALIGN_CENTER);
+                //写入段落
+                document.add(p);
+            }
+            //关流
+            document.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+*/
+
+        return null;
     }
 
 }
